@@ -16,11 +16,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        view.findViewById<Button>(R.id.button1).setOnClickListener {
+        view.findViewById<Button>(R.id.b1S).setOnClickListener {
             val bundle = bundleOf("noteTitle" to "Notiz1") // TODO tatsächlicher Titel
             view.findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
         }
-        view.findViewById<Button>(R.id.button1).setOnClickListener {
+        view.findViewById<Button>(R.id.b1S).setOnClickListener {
             val bundle = bundleOf("noteTitle" to "Notiz2") // TODO tatsächlicher Titel
             view.findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
         }

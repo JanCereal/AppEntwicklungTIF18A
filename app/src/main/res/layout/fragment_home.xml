@@ -11,6 +11,7 @@
         android:id="@+id/editAppName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
         android:autoText="false"
         android:ems="10"
         android:gravity="center"
@@ -19,30 +20,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="61dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/b1S"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
-        android:text="Notiz1"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="234dp" />
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="133dp"
+        android:text="Schnelles Spiel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAppName" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/b2K"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
-        android:text="Notiz2"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="293dp" />
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Kategorien"
+        app:layout_constraintBottom_toTopOf="@+id/b3E"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b1S" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/b3E"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="127dp"
+        android:layout_marginLeft="127dp"
+        android:layout_marginTop="10dp"
         android:text="Einstellungen"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="354dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b2K" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
