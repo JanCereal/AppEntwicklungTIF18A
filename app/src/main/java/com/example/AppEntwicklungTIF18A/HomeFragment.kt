@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.AppEntwicklungTIF18A.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     override fun onCreateView(
@@ -15,15 +16,16 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        view.findViewById<Button>(R.id.b1S).setOnClickListener {
-            val bundle = bundleOf("noteTitle" to "Notiz1") // TODO tatsächlicher Titel
-            view.findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+        val binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.btnQuickplay.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment)
         }
-        view.findViewById<Button>(R.id.b1S).setOnClickListener {
-            val bundle = bundleOf("noteTitle" to "Notiz2") // TODO tatsächlicher Titel
-            view.findNavController().navigate(R.id.action_homeFragment_to_detailFragment, bundle)
+        binding.btnSettings.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
         }
-        return view
+        binding.btnCategory.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_homeFragment_to_categoryFragment)
+        }
+        return binding.root
     }
 }
