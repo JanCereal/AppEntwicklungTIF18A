@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.AppEntwicklungTIF18A.databinding.FragmentSuccessBinding
 
 
 class SuccessFragment : Fragment() {
@@ -15,6 +16,7 @@ class SuccessFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
-        return null
+        val binding = FragmentSuccessBinding.inflate(layoutInflater)
+        return binding.root
     }
 }

@@ -4,72 +4,82 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.AppEntwicklungTIF18A.databinding.FragmentGameBinding
 import com.squareup.picasso.Picasso
-import org.json.JSONArray
+import kotlinx.android.synthetic.main.fragment_game.*
 import org.json.JSONException
-import org.json.JSONObject
 
 
 class GameFragment : Fragment() {
 
-    val imageUrls = arrayListOf<String>("10", "20", "3", "4")
+
+    val keywordList = mutableListOf("water", "tree", "dirt", "cat")
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentGameBinding.inflate(layoutInflater)
+        val userKeyword = "water"
+
+        //search
+        keywordList.shuffle()
+        parseJSON(binding, keywordList[0])
+        keywordList.removeAt(0)
+
 
         binding.btnNext.setOnClickListener { view: View ->
-            parseJSON()
-            Picasso.get().load(imageUrls[0]).into(binding.imagePanel1)
-            Picasso.get().load(imageUrls[1]).into(binding.imagePanel2)
-
-            //println(imageUrls[0])
-            //println(imageUrls[1])
+            var userAnswer = answerTextView.text.toString()
+            if(userAnswer.toLowerCase() == userKeyword.toLowerCase()){
+                view.findNavController().navigate(R.id.action_gameFragment_to_successFragment)
+            } else {
+                answerTextView.setText("Wrong!")
+            }
         }
-
-
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         return binding.root
     }
 
-    private fun parseJSON() {
-        println("startenis")
-        val url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=kitten&image_type=photo&pretty=true"
-        println("secondenis")
+    private fun parseJSON(binding: FragmentGameBinding, keyword: String) {
 
-        val request = JsonObjectRequest(Request.Method.GET, url, null,
-            Response.Listener<JSONObject?> {
-                println("thirdenis")
-                fun onResponse(response: JSONObject) {
-                    println("fourthenis")
-                    try {
-                        println("2222222")
-                        val jsonArray: JSONArray = response.getJSONArray("hits")
-                        for (i in 0 until jsonArray.length()) {
-                            val hit: JSONObject = jsonArray.getJSONObject(i)
-                            imageUrls[i] = hit.getString("webformatURL")
-                            //println(imageUrls[i])
+        val url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
+        val imageUrls = mutableListOf("1", "2", "3", "4")
+        val requestQueue: RequestQueue? = Volley.newRequestQueue(context)
+
+        val request =
+            JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
+                try {
+                    val jsonArray = response.getJSONArray("hits")
+                    for (i in 0 until 4) {
+                        val employee = jsonArray.getJSONObject(i)
+                        val imageUrl = employee.getString("previewURL")
+                        imageUrls.add(i, imageUrl)
+                        when (i) {
+                            0 -> Picasso.get().load(imageUrls[i]).into(imagePanel1)
+                            1 -> Picasso.get().load(imageUrls[i]).into(imagePanel2)
+                            2 -> Picasso.get().load(imageUrls[i]).into(imagePanel3)
+                            3 -> Picasso.get().load(imageUrls[i]).into(imagePanel4)
+                            else -> {
+                                print("error")
+                            }
                         }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
                     }
-                }
-            }, Response.ErrorListener {
-                fun onErrorResponse(error: VolleyError) {
-                    error.printStackTrace()
-                }
-            })
-        //Queue ? mRequestQueue.add(request)
-    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
 
+                }
+            }, Response.ErrorListener { error -> error.printStackTrace() })
+        requestQueue?.add(request)
+    }
 }
+
