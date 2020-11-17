@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.AppEntwicklungTIF18A.databinding.FragmentSuccessBinding
 
 
@@ -17,6 +19,23 @@ class SuccessFragment : Fragment() {
     ): View? {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         val binding = FragmentSuccessBinding.inflate(layoutInflater)
+
+        val tempKeywordList = arguments?.getStringArrayList("KeywordList")
+        val bundle = bundleOf("KeywordList" to tempKeywordList)
+
+        if (tempKeywordList?.size != 0) {
+            println(tempKeywordList)
+            binding.btnNext.setOnClickListener { view: View ->
+                view.findNavController()
+                    .navigate(R.id.action_successFragment_to_gameFragment, bundle)
+            }
+        } else {
+            println(tempKeywordList)
+            binding.btnNext.setOnClickListener { view: View ->
+                view.findNavController()
+                    .navigate(R.id.action_successFragment_to_homeFragment)
+            }
+        }
         return binding.root
     }
 }

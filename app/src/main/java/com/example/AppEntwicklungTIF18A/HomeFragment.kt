@@ -16,9 +16,16 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val keywordList = mutableListOf("water", "tree", "dirt", "cat")
+        val bundle = bundleOf("KeywordList" to keywordList)
+
+
+
+
         val binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.btnQuickplay.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment)
+            view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
         binding.btnSettings.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)

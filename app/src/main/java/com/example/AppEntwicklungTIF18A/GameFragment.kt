@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.android.volley.Request
@@ -21,29 +22,36 @@ import org.json.JSONException
 
 class GameFragment : Fragment() {
 
-
-    val keywordList = mutableListOf("water", "tree", "dirt", "cat")
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentGameBinding.inflate(layoutInflater)
-        val userKeyword = "water"
+        val tempKeywordList = arguments?.getStringArrayList("KeywordList")
 
         //search
-        keywordList.shuffle()
-        parseJSON(binding, keywordList[0])
-        keywordList.removeAt(0)
+        if(tempKeywordList?.size != null) {
+            tempKeywordList.shuffle()
+            parseJSON(binding, tempKeywordList[0])
+        } else {
+            println("keywordList empty")
+        }
 
-
-        binding.btnNext.setOnClickListener { view: View ->
+        //Buttons
+        binding.btnAnswer.setOnClickListener { view: View ->
             var userAnswer = answerTextView.text.toString()
-            if(userAnswer.toLowerCase() == userKeyword.toLowerCase()){
-                view.findNavController().navigate(R.id.action_gameFragment_to_successFragment)
-            } else {
-                answerTextView.setText("Wrong!")
+            if (tempKeywordList?.size != 0) {
+                //Answer check
+                if (userAnswer.toLowerCase() == tempKeywordList?.get(0)?.toLowerCase()) {
+                    val bundle = bundleOf("KeywordList" to tempKeywordList)
+                    tempKeywordList.removeAt(0)
+                    view.findNavController()
+                        .navigate(R.id.action_gameFragment_to_successFragment, bundle)
+                } else {
+                    answerTextView.setText("Wrong!")
+                }
+
             }
         }
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
@@ -76,7 +84,6 @@ class GameFragment : Fragment() {
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
-
                 }
             }, Response.ErrorListener { error -> error.printStackTrace() })
         requestQueue?.add(request)
