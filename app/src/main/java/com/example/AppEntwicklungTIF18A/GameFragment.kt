@@ -1,9 +1,11 @@
 package com.example.AppEntwicklungTIF18A
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -31,36 +33,38 @@ class GameFragment : Fragment() {
         val tempKeywordList = arguments?.getStringArrayList("rKeywordList")
 
         //search
-        if(tempKeywordList?.size != null) {
+        if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
             parseSearchJSON(binding, tempKeywordList[0])
+            binding.charCountTextView.setText("Das gesuchte Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben")
         } else {
             println("rKeywordList empty")
         }
+        //
 
-        //Buttons
+        //Buttons and EnterKey (UserAnswerAction)
+        binding.answerTextView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                checkAnswer(tempKeywordList as ArrayList<String>)
+                return@OnKeyListener true
+            }
+            false
+        })
         binding.btnAnswer.setOnClickListener { view: View ->
             var userAnswer = answerTextView.text.toString()
             if (tempKeywordList?.size != 0) {
-                //Answer check
-                if (userAnswer.toLowerCase() == tempKeywordList?.get(0)?.toLowerCase()) {
-                    val bundle = bundleOf("rKeywordList" to tempKeywordList)
-                    tempKeywordList.removeAt(0)
-                    view.findNavController()
-                        .navigate(R.id.action_gameFragment_to_successFragment, bundle)
-                } else {
-                    answerTextView.setText("Wrong!")
-                }
-
+                checkAnswer(tempKeywordList as ArrayList<String>)
             }
         }
+        //
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         return binding.root
     }
 
     private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
 
-        val url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
+        val url =
+            "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
         val imageUrls = mutableListOf("1", "2", "3", "4")
         val requestQueue: RequestQueue? = Volley.newRequestQueue(context)
 
@@ -87,6 +91,22 @@ class GameFragment : Fragment() {
                 }
             }, Response.ErrorListener { error -> error.printStackTrace() })
         requestQueue?.add(request)
+    }
+
+    private fun checkAnswer(tempKeywordList: ArrayList<String>) {
+        var userAnswer = answerTextView.text.toString()
+        if (tempKeywordList?.size != 0) {
+            //Answer check
+            println(userAnswer + " - " + tempKeywordList?.get(0))
+            if (userAnswer.trim().equals(tempKeywordList?.get(0),true)) {
+                val bundle = bundleOf("rKeywordList" to tempKeywordList)
+                tempKeywordList.removeAt(0)
+                view?.findNavController()
+                    ?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
+            } else {
+                answerTextView.setText("Wrong!")
+            }
+        }
     }
 }
 

@@ -23,9 +23,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
+        categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
         //writeCategoryJson()
-        readCategoryJson()
+        //readCategoryJson()
 
 
         val binding = FragmentHomeBinding.inflate(layoutInflater)
