@@ -28,14 +28,14 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentGameBinding.inflate(layoutInflater)
-        val tempKeywordList = arguments?.getStringArrayList("KeywordList")
+        val tempKeywordList = arguments?.getStringArrayList("rKeywordList")
 
         //search
         if(tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
-            parseJSON(binding, tempKeywordList[0])
+            parseSearchJSON(binding, tempKeywordList[0])
         } else {
-            println("keywordList empty")
+            println("rKeywordList empty")
         }
 
         //Buttons
@@ -44,7 +44,7 @@ class GameFragment : Fragment() {
             if (tempKeywordList?.size != 0) {
                 //Answer check
                 if (userAnswer.toLowerCase() == tempKeywordList?.get(0)?.toLowerCase()) {
-                    val bundle = bundleOf("KeywordList" to tempKeywordList)
+                    val bundle = bundleOf("rKeywordList" to tempKeywordList)
                     tempKeywordList.removeAt(0)
                     view.findNavController()
                         .navigate(R.id.action_gameFragment_to_successFragment, bundle)
@@ -58,7 +58,7 @@ class GameFragment : Fragment() {
         return binding.root
     }
 
-    private fun parseJSON(binding: FragmentGameBinding, keyword: String) {
+    private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
 
         val url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
         val imageUrls = mutableListOf("1", "2", "3", "4")
