@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
         //writeCategoryJson()
         //readCategoryJson()
 
-
         val binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.btnQuickplay.setOnClickListener { view: View ->
             val bundle = bundleOf("rKeywordList" to getRandomKeywordList())

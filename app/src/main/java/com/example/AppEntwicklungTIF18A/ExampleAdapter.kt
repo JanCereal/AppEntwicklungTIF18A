@@ -7,27 +7,44 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ExampleAdapter(exampleList : ArrayList<ExampleCategory>): RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
-    var mExampleCategories = exampleList
+class ExampleAdapter(list: ArrayList<Category>) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
+    private var categories = list
 
-    inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var image = itemView.findViewById<ImageView>(R.id.imgView)
-        var categoryName = itemView.findViewById<TextView>(R.id.txtCategory)
+    interface OnItemClickListener {
+        
+    }
+
+    inner class ExampleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        var categoryImage : ImageView
+        var categoryName : TextView
+        var deleteImage : ImageView
+
+        init {
+            categoryImage = itemView.findViewById<ImageView>(R.id.imgView)
+            categoryName =  itemView.findViewById<TextView>(R.id.txtCategory)
+            deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)!!
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.example_category, parent, false)
+        val view =LayoutInflater.from(parent.context).inflate(R.layout.example_category, parent, false)
         return ExampleViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return mExampleCategories.size
+        return categories.size
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        val currentItem = mExampleCategories.get(position)
+        holder.categoryImage.setImageResource(categories[position].getCategoryImage())
+        holder.categoryName.text = categories[position].getCategoryName()
 
-        holder.image.setImageResource(currentItem.getCategoryImage())
-        holder.categoryName.setText(currentItem.getCategoryName())
+        holder.itemView.setOnClickListener{
+            if (categories.size > 0) {
+                categories.removeAt(position)
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(0, categories.size - 1)
+            }
+        }
     }
 }
