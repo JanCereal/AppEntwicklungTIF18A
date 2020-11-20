@@ -7,27 +7,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ExampleAdapter(list: ArrayList<Category>) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
-    private var categories = list
-
-    interface OnItemClickListener {
-        
-    }
+class ExampleAdapter(exampleList : ArrayList<Category>): RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
+    var categories = exampleList
 
     inner class ExampleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var categoryImage : ImageView
-        var categoryName : TextView
-        var deleteImage : ImageView
-
-        init {
-            categoryImage = itemView.findViewById<ImageView>(R.id.imgView)
-            categoryName =  itemView.findViewById<TextView>(R.id.txtCategory)
-            deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)!!
-        }
+        var image = itemView.findViewById<ImageView>(R.id.imgView)
+        var categoryName = itemView.findViewById<TextView>(R.id.txtCategory)
+        var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
-        val view =LayoutInflater.from(parent.context).inflate(R.layout.example_category, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.example_category, parent, false)
         return ExampleViewHolder(view)
     }
 
@@ -36,14 +26,13 @@ class ExampleAdapter(list: ArrayList<Category>) : RecyclerView.Adapter<ExampleAd
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        holder.categoryImage.setImageResource(categories[position].getCategoryImage())
+        holder.image.setImageResource(categories[position].getCategoryImage())
         holder.categoryName.text = categories[position].getCategoryName()
 
         holder.itemView.setOnClickListener{
             if (categories.size > 0) {
                 categories.removeAt(position)
                 notifyItemRemoved(position)
-                notifyItemRangeChanged(0, categories.size - 1)
             }
         }
     }
