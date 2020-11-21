@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.AppEntwicklungTIF18A.databinding.FragmentCategoryBinding
 
@@ -25,6 +26,10 @@ class CategoryFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ExampleAdapter(categories)
+
+        binding.fabAdd.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment)
+        }
 
         return binding.root
     }

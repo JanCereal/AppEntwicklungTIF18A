@@ -31,7 +31,6 @@ class GameFragment : Fragment() {
     ): View? {
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
-        println(tempKeywordList)
 
         //search
         if (tempKeywordList?.size != null) {

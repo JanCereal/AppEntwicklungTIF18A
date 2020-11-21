@@ -12,15 +12,6 @@
         android:layout_height="match_parent"
         android:layout_margin="4dp">
 
-        <ImageView
-            android:id="@+id/imgCategory"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:contentDescription="CategoryImage"
-            android:padding="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
         <TextView
             android:id="@+id/txtCategory"
             android:layout_width="wrap_content"
@@ -32,13 +23,13 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgCategory"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imgPlay"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="Play"
             android:tint="#009900"
             app:layout_constraintEnd_toStartOf="@+id/imgEdit"
@@ -47,18 +38,18 @@
 
         <ImageView
             android:id="@+id/imgEdit"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="Edit"
+            android:tint="#0066ff"
             app:layout_constraintEnd_toStartOf="@+id/imgDelete"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_edit"
-            android:tint="#0066ff"
-            android:contentDescription="Edit"/>
+            app:srcCompat="@drawable/ic_edit" />
 
         <ImageView
             android:id="@+id/imgDelete"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:contentDescription="Delete"
             android:tint="#ff3300"
             app:layout_constraintEnd_toEndOf="parent"
