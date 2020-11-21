@@ -30,7 +30,7 @@ class GameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentGameBinding.inflate(layoutInflater)
-        val tempKeywordList = arguments?.getStringArrayList("rKeywordList")
+        val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
 
         //search
         if (tempKeywordList?.size != null) {
@@ -63,8 +63,7 @@ class GameFragment : Fragment() {
 
     private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
 
-        val url =
-            "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
+        val url = "https://pixabay.com/api/?key=19136467-b21f539dc44aeb980574b7d33=" + keyword + "&image_type=photo&pretty=true"
         val imageUrls = mutableListOf("1", "2", "3", "4")
         val requestQueue: RequestQueue? = Volley.newRequestQueue(context)
 
