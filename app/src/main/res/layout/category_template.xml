@@ -13,14 +13,13 @@
         android:layout_margin="4dp">
 
         <ImageView
-            android:id="@+id/imgView"
+            android:id="@+id/imgCategory"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:contentDescription="CategoryName"
+            android:contentDescription="CategoryImage"
             android:padding="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/txtCategory"
@@ -33,17 +32,27 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgView"
+            app:layout_constraintStart_toEndOf="@+id/imgCategory"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgPlay"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="Play"
+            app:layout_constraintEnd_toStartOf="@+id/imgDelete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_play"
+            android:tint="	 #009900"/>
 
         <ImageView
             android:id="@+id/imgDelete"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_delete"
-            tools:ignore="MissingConstraints">
-
-        </ImageView>
+            app:srcCompat="@drawable/ic_delete"
+            android:tint="#ff3300"
+            tools:ignore="MissingConstraints"
+            android:contentDescription="Delete"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

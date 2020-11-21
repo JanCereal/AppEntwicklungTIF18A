@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.AppEntwicklungTIF18A.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
@@ -18,9 +17,9 @@ class CategoryFragment : Fragment() {
         val binding = FragmentCategoryBinding.inflate(layoutInflater)
 
         val categories = ArrayList<Category>()
-        categories.add(Category(R.drawable.ic_android, "Nature"))
-        categories.add(Category(R.drawable.ic_android, "Cars"))
-        categories.add(Category(R.drawable.ic_android, "Brands"))
+        categories.add(Category(R.drawable.ic_android, "Nature", mutableListOf("Tree", "Desert", "Forest")))
+        categories.add(Category(R.drawable.ic_android, "Cars", mutableListOf("Audi", "Mercedes", "Opel")))
+        categories.add(Category(R.drawable.ic_android, "Brands", mutableListOf("Adidas", "Nike", "Puma")))
 
         val recyclerView = binding.recyclerview
         recyclerView.setHasFixedSize(true)

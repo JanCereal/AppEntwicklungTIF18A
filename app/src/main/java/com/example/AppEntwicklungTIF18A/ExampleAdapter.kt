@@ -5,19 +5,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class ExampleAdapter(exampleList : ArrayList<Category>): RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
     var categories = exampleList
 
     inner class ExampleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var image = itemView.findViewById<ImageView>(R.id.imgView)
+        var categoryImage = itemView.findViewById<ImageView>(R.id.imgCategory)
         var categoryName = itemView.findViewById<TextView>(R.id.txtCategory)
         var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
+        var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
+
+        init {
+            deleteImage.setOnClickListener{v: View ->
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    categories.removeAt(position)
+                    notifyItemRemoved(position)
+                }
+            }
+            playImage.setOnClickListener{ v: View ->
+                val  position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    Toast.makeText(itemView.context, "${categories[position].getCategoryList()}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.example_category, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_template, parent, false)
         return ExampleViewHolder(view)
     }
 
@@ -26,14 +44,7 @@ class ExampleAdapter(exampleList : ArrayList<Category>): RecyclerView.Adapter<Ex
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        holder.image.setImageResource(categories[position].getCategoryImage())
+        holder.categoryImage.setImageResource(categories[position].getCategoryImage())
         holder.categoryName.text = categories[position].getCategoryName()
-
-        holder.itemView.setOnClickListener{
-            if (categories.size > 0) {
-                categories.removeAt(position)
-                notifyItemRemoved(position)
-            }
-        }
     }
 }
