@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
 
         val binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.btnQuickplay.setOnClickListener { view: View ->
-            val bundle = bundleOf("rKeywordList" to getRandomKeywordList())
+            val bundle = bundleOf("selectedCategory" to getRandomKeywordList())
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
         binding.btnSettings.setOnClickListener { view: View ->

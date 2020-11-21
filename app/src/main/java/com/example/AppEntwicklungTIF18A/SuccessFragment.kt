@@ -20,18 +20,16 @@ class SuccessFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         val binding = FragmentSuccessBinding.inflate(layoutInflater)
 
-        val tempKeywordList = arguments?.getStringArrayList("rKeywordList")
-        val bundle = bundleOf("rKeywordList" to tempKeywordList)
+        val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
+        val bundle = bundleOf("selectedCategory" to tempKeywordList)
 
         if (tempKeywordList?.size != 0) {
             binding.btnNext.setOnClickListener { view: View ->
-                view.findNavController()
-                    .navigate(R.id.action_successFragment_to_gameFragment, bundle)
+                view.findNavController().navigate(R.id.action_successFragment_to_gameFragment, bundle)
             }
         } else {
             binding.btnNext.setOnClickListener { view: View ->
-                view.findNavController()
-                    .navigate(R.id.action_successFragment_to_homeFragment)
+                view.findNavController().navigate(R.id.action_successFragment_to_homeFragment)
             }
         }
         return binding.root
