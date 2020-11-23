@@ -9,7 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoryAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
+class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
     var categories = exampleList
 
     inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,13 +29,13 @@ class CategoryAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<C
             playImage.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val bundle = bundleOf("selectedCategory" to categories[position].getCategoryList())
+                    val bundle = bundleOf("selectedCategory" to categories[position].second)
                     v.findNavController().navigate(R.id.action_categoryFragment_to_gameFragment, bundle)
                 }
             }
             editImage.setOnClickListener{ v: View ->
                 val position = adapterPosition
-                val bundle = bundleOf("editCategory" to categories[position].getCategoryList())
+                val bundle = bundleOf("editCategoryName" to categories[position].first, "editCategoryList" to categories[position].second)
                 v.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment, bundle)
             }
 
@@ -52,6 +52,6 @@ class CategoryAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<C
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        holder.categoryName.text = categories[position].getCategoryName()
+        holder.categoryName.text = categories[position].first
     }
 }
