@@ -24,8 +24,6 @@ class HomeFragment : Fragment() {
     ): View? {
 
         categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
-        //writeCategoryJson()
-        //readCategoryJson()
 
         val binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.btnQuickplay.setOnClickListener { view: View ->
@@ -48,6 +46,7 @@ class HomeFragment : Fragment() {
         return rKeywordList;
     }
 
+    /*
     private fun writeCategoryJson() {
         val file = File(context?.filesDir, "categoryData")
         var jsonString = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
@@ -71,4 +70,5 @@ class HomeFragment : Fragment() {
             }
         }
     }
+    */
 }
