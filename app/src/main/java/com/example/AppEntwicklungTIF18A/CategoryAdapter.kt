@@ -9,11 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class ExampleAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
+class CategoryAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
     var categories = exampleList
 
     inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var categoryName = itemView.findViewById<TextView>(R.id.txtCategory)
+        var categoryName = itemView.findViewById<TextView>(R.id.txtCategoryName)
         var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
         var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
         var editImage = itemView.findViewById<ImageView>(R.id.imgEdit)
@@ -38,6 +38,7 @@ class ExampleAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<Ex
                 val bundle = bundleOf("editCategory" to categories[position].getCategoryList())
                 v.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment, bundle)
             }
+
         }
     }
 

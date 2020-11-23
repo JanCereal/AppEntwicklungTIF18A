@@ -1,13 +1,8 @@
 package com.example.AppEntwicklungTIF18A
 
-class Category(imageResource: Int, categoryName: String, categoryMembers: MutableList<String>) {
-    val _categoryImage= imageResource
+class Category(categoryName: String, categoryMembers: MutableList<String>) {
     val _categoryName= categoryName
     val _categoryMembers = categoryMembers
-
-    fun getCategoryImage(): Int {
-        return _categoryImage
-    }
 
     fun getCategoryName(): String {
         return _categoryName
