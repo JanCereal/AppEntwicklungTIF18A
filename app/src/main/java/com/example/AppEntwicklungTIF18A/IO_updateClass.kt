@@ -19,7 +19,19 @@ class IO_updateClass {
 
         fun getSavedFile(context: Context?): ArrayList<Category> {
             val data = readCategoryJson(context)
-            //TODO parse jsonData zu Collection
+            categoryCollection.clear()
+            data?.keys()?.forEach {categoryName ->
+                var words = ""
+                data[categoryName].let { any -> words += any }
+                words = words.replace(Regex("""[$\[\]\"]"""), "")
+                val listWords = words.split(',')
+                val newCategory = Category(R.drawable.ic_android, categoryName, listWords as MutableList<String>)
+                categoryCollection.add(newCategory)
+            }
+            categoryCollection.forEach {
+                println(it._categoryName)
+                println(it._categoryMembers)
+            }
             return categoryCollection
         }
 
