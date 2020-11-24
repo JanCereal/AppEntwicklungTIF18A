@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.AppEntwicklungTIF18A.CategoryFragment"
-        android:label="Categorys"
+        android:label="Categories"
         tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_categoryFragment_to_selectedCategoryFragment"
@@ -50,7 +50,7 @@
     <fragment
         android:id="@+id/selectedCategoryFragment"
         android:name="com.example.AppEntwicklungTIF18A.SelectedCategoryFragment"
-        android:label="SelectedCategory (Name der Kategorie)"
+        android:label="Ausgewähle Kategorie bearbeiten"
         tools:layout="@layout/fragment_selectedcategory">
         <action
             android:id="@+id/action_selectedCategoryFragment_to_categoryFragment"

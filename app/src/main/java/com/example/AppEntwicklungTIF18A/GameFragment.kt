@@ -1,11 +1,13 @@
 package com.example.AppEntwicklungTIF18A
 
+import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -21,14 +23,13 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_game.*
 import org.json.JSONException
 
-
 class GameFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
 
@@ -45,7 +46,7 @@ class GameFragment : Fragment() {
         //Buttons and EnterKey (UserAnswerAction)
         binding.answerTextView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                checkAnswer(tempKeywordList as ArrayList<String>)
+                checkAnswer(tempKeywordList as ArrayList<String>, v, inputManager)
                 return@OnKeyListener true
             }
             false
@@ -53,7 +54,7 @@ class GameFragment : Fragment() {
         binding.btnAnswer.setOnClickListener { view: View ->
             var userAnswer = answerTextView.text.toString()
             if (tempKeywordList?.size != 0) {
-                checkAnswer(tempKeywordList as ArrayList<String>)
+                checkAnswer(tempKeywordList as ArrayList<String>, view, inputManager)
             }
         }
         //
@@ -90,7 +91,7 @@ class GameFragment : Fragment() {
         requestQueue?.add(request)
     }
 
-    private fun checkAnswer(tempKeywordList: ArrayList<String>) {
+    private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
         var userAnswer = answerTextView.text.toString()
         if (tempKeywordList?.size != 0) {
             //Answer check
@@ -103,6 +104,7 @@ class GameFragment : Fragment() {
                 answerTextView.setText("Wrong!")
             }
         }
+        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
     }
 }
 
