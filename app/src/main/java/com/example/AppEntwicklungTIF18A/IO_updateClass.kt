@@ -1,29 +1,35 @@
 package com.example.AppEntwicklungTIF18A
 
+import android.content.Context
+import org.json.JSONObject
+import java.io.File
+
 class IO_updateClass {
 
     var categoryCollection = ArrayList<Category>()
 
     constructor() {
-        //TODO idk?
     }
 
-    fun updateCategory(changedCategory: ArrayList<String>) {
+    fun updateCategory(context: Context, changedCategory: Category) {
         //TODO update Strings in der bearbeiteten Kategorie und speicher die Änderung in File?
     }
 
-    fun updateSavedFile(toSave: ArrayList<Category>) {
+    fun updateSavedFile(context: Context, toSave: ArrayList<Category>) {
         //TODO update die hinterlegte File?
     }
 
-    fun getSavedFile(): ArrayList<Category> {
-        //TODO get Collection von der hinterlegten File?
+    fun getSavedFile(context: Context): ArrayList<Category> {
+        val text = readCategoryJson(context)
+        //TODO parse text in Collection
+
         return categoryCollection
     }
-    /*
-private fun writeCategoryJson() {
+
+private fun writeCategoryJson(context:Context, category:Category) {
     val file = File(context?.filesDir, "categoryData")
-    var jsonString = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
+
+    var jsonString = JSONObject(category._categoryMembers as Map<String, MutableList<String>>).toString()
 
     try {
         val fileName = "categoryData.json"
@@ -35,7 +41,7 @@ private fun writeCategoryJson() {
     }
 }
 
-private fun readCategoryJson() {
+private fun readCategoryJson(context:Context) {
     context?.openFileInput("categoryData.json").use { stream ->
         val text = stream?.bufferedReader().use {
             val data = JSONObject(it?.readText())
@@ -44,5 +50,5 @@ private fun readCategoryJson() {
         }
     }
 }
-*/
+
 }
