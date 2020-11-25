@@ -15,15 +15,14 @@ import java.io.File
 
 class HomeFragment : Fragment() {
 
-    var categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
+        /// Standart Liste wird erstellt und als datei gespeichert falls noch keine besteht
+        IO_updateClass.writeCategoryJson(context)
 
         val binding = FragmentHomeBinding.inflate(layoutInflater)
         binding.btnQuickplay.setOnClickListener { view: View ->
@@ -41,8 +40,8 @@ class HomeFragment : Fragment() {
 
     //TODO : Get RANDOM category for gameFragment
     private fun getRandomKeywordList(): MutableList<String>? {
-        val rKeywordList = categoryMap["Nature"]
-
-        return rKeywordList;
+        var list: ArrayList<Pair<String, MutableList<String>>> = IO_updateClass.getSavedFile(context)
+        //TODO 0 mit Random ersetzen und checken ob list.second items hat
+        return list[0].second
     }
 }
