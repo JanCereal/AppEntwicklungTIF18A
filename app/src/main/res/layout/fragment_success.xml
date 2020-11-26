@@ -15,7 +15,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
-        android:text="You son of a bitch did it!"
+        android:text="Congrats! You gessed the Word Right!"
         android:textColor="#000000"
         android:textSize="40sp"
         android:visibility="visible"
