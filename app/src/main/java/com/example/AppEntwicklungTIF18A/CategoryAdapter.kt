@@ -9,11 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class ExampleAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder>() {
+class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
     var categories = exampleList
 
     inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var categoryName = itemView.findViewById<TextView>(R.id.txtCategory)
+        var categoryName = itemView.findViewById<TextView>(R.id.txtCategoryName)
         var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
         var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
         var editImage = itemView.findViewById<ImageView>(R.id.imgEdit)
@@ -29,15 +29,16 @@ class ExampleAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<Ex
             playImage.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val bundle = bundleOf("selectedCategory" to categories[position].getCategoryList())
+                    val bundle = bundleOf("selectedCategory" to categories[position].second)
                     v.findNavController().navigate(R.id.action_categoryFragment_to_gameFragment, bundle)
                 }
             }
             editImage.setOnClickListener{ v: View ->
                 val position = adapterPosition
-                val bundle = bundleOf("editCategory" to categories[position].getCategoryList())
+                val bundle = bundleOf("editCategoryName" to categories[position].first, "editCategoryList" to categories[position].second)
                 v.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment, bundle)
             }
+
         }
     }
 
@@ -51,6 +52,6 @@ class ExampleAdapter(exampleList: ArrayList<Category>) : RecyclerView.Adapter<Ex
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        holder.categoryName.text = categories[position].getCategoryName()
+        holder.categoryName.text = categories[position].first
     }
 }
