@@ -9,8 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
+class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>, parent: ViewGroup?) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
     var categories = exampleList
+    var context = parent?.context
 
     inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var categoryName = itemView.findViewById<TextView>(R.id.txtCategoryName)
@@ -22,6 +23,8 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>)
             deleteImage.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
+                    println(categoryName.text.toString())
+                    IO_updateClass.deleteCategory(context, categoryName.text.toString())
                     categories.removeAt(position)
                     notifyItemRemoved(position)
                 }
@@ -35,10 +38,11 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>)
             }
             editImage.setOnClickListener{ v: View ->
                 val position = adapterPosition
-                val bundle = bundleOf("editCategoryName" to categories[position].first, "editCategoryList" to categories[position].second)
-                v.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment, bundle)
+                if (position != RecyclerView.NO_POSITION) {
+                    val bundle = bundleOf("editCategoryName" to categories[position].first, "editCategoryList" to ArrayList<String>(categories[position].second))
+                    v.findNavController().navigate(R.id.action_categoryFragment_to_selectedCategoryFragment, bundle)
+                }
             }
-
         }
     }
 

@@ -21,36 +21,35 @@ class CategoryFragment : Fragment() {
     ): View? {
         val binding = FragmentCategoryBinding.inflate(layoutInflater)
         val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val categories = ArrayList<Pair<String, MutableList<String>>>()
-        
-        categories.add(Pair("Nature", mutableListOf("Tree", "Desert", "Forest")))
-        categories.add(Pair("Cars", mutableListOf("Audi", "Mercedes", "Opel")))
-        categories.add(Pair("Brands", mutableListOf("Adidas", "Nike", "Puma")))
+        val categories = IO_updateClass.getSavedFile(context)
 
         val recyclerView = binding.recyclerViewCategory
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CategoryAdapter(categories)
+        recyclerView.adapter = CategoryAdapter(categories, container)
 
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                AddCategory(categories, recyclerView, v, inputManager)
+                categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
+                recyclerView.adapter = CategoryAdapter(categories, container)
+                IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
+
+                inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+
+                txtAddCategory.text.clear()
                 return@OnKeyListener true
             }
             false
         })
         binding.btnCreateCategory.setOnClickListener{ v : View ->
-            AddCategory(categories, recyclerView, v, inputManager)
+            categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
+            recyclerView.adapter = CategoryAdapter(categories, container)
+            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
+
+            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+
+            txtAddCategory.text.clear()
         }
         return binding.root
-    }
-
-    fun AddCategory(categories: ArrayList<Pair<String, MutableList<String>>>, recyclerView: RecyclerView, v: View, inputManager: InputMethodManager) {
-        categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
-        recyclerView.adapter = CategoryAdapter(categories)
-
-        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
-        txtAddCategory.text.clear()
     }
 }
