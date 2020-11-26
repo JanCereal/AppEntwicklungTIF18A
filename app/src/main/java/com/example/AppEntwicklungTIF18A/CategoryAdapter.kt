@@ -32,7 +32,7 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>,
             playImage.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val bundle = bundleOf("selectedCategory" to categories[position].second)
+                    val bundle = bundleOf("selectedCategory" to ArrayList<String>(categories[position].second))
                     v.findNavController().navigate(R.id.action_categoryFragment_to_gameFragment, bundle)
                 }
             }
