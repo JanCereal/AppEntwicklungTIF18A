@@ -29,6 +29,16 @@ class CategoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CategoryAdapter(categories, container)
 
+        fun localAddMethod(v:View){
+            categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
+            recyclerView.adapter = CategoryAdapter(categories, container)
+            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
+
+            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+
+            txtAddCategory.text.clear()
+        }
+
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 categories.forEach {
@@ -41,26 +51,14 @@ class CategoryFragment : Fragment() {
                         return@OnKeyListener true
                     }
                 }
-                categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
-                recyclerView.adapter = CategoryAdapter(categories, container)
-                IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
-
-                inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
-                txtAddCategory.text.clear()
+                localAddMethod(v)
                 return@OnKeyListener true
             }
             false
         })
 
         binding.btnCreateCategory.setOnClickListener{ v : View ->
-            categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
-            recyclerView.adapter = CategoryAdapter(categories, container)
-            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
-
-            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
-            txtAddCategory.text.clear()
+            localAddMethod(v)
         }
         return binding.root
     }
