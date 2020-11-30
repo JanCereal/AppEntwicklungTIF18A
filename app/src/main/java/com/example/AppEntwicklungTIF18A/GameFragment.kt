@@ -134,7 +134,8 @@ class GameFragment : Fragment() {
                 val soundBox = MediaPlayer.create(this.context, R.raw.ding)
                 soundBox.start()
             } else {
-                answerTextView.setText("Wrong!")
+                answerTextView.hint = "Wrong!"
+                answerTextView.setText("")
             }
         }
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
