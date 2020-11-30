@@ -1,6 +1,7 @@
 package com.example.AppEntwicklungTIF18A
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -22,6 +23,8 @@ import com.example.AppEntwicklungTIF18A.databinding.FragmentGameBinding
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_game.*
 import org.json.JSONException
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class GameFragment : Fragment() {
     override fun onCreateView(
@@ -29,7 +32,8 @@ class GameFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager =
+            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
 
@@ -37,7 +41,7 @@ class GameFragment : Fragment() {
         if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
             parseSearchJSON(binding, tempKeywordList[0])
-            binding.charCountTextView.setText("Das gesuchte Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben")
+            binding.charCountTextView.setText("Das Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben")
         } else {
             println("rKeywordList empty")
         }
@@ -58,20 +62,42 @@ class GameFragment : Fragment() {
             }
         }
         //
+
+        binding.btnReroll.setOnClickListener { view: View ->
+            if (tempKeywordList != null) {
+                parseSearchJSON(binding, tempKeywordList[0])
+            }
+        }
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         return binding.root
     }
 
     private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
-        val url = "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
+        val url =
+            "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
         val imageUrls = mutableListOf("1", "2", "3", "4")
         val requestQueue: RequestQueue? = Volley.newRequestQueue(context)
 
-        val request = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener { response ->
+        val request =
+            JsonObjectRequest(Request.Method.GET, url, null, { response ->
                 try {
                     val jsonArray = response.getJSONArray("hits")
+
+                    println(jsonArray.length())
+
+                    val randArray = mutableListOf<Int>()
+                    var done = 0
+                    while(true) {
+                        val tempRand = Random.nextInt(0 until jsonArray.length())
+                        if (isUnique(randArray, tempRand)) {
+                            randArray.add(done, tempRand)
+                            done ++
+                            if(done == 4){break}
+                        }
+                    }
+
                     for (i in 0 until 4) {
-                        val employee = jsonArray.getJSONObject(i)
+                        val employee = jsonArray.getJSONObject(randArray[i])
                         val imageUrl = employee.getString("previewURL")
                         imageUrls.add(i, imageUrl)
                         when (i) {
@@ -87,24 +113,41 @@ class GameFragment : Fragment() {
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-            }, Response.ErrorListener { error -> error.printStackTrace() })
+            }, { error -> error.printStackTrace() })
         requestQueue?.add(request)
     }
 
-    private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
+    private fun checkAnswer(
+        tempKeywordList: ArrayList<String>,
+        v: View,
+        inputManager: InputMethodManager
+    ) {
         var userAnswer = answerTextView.text.toString()
         if (tempKeywordList?.size != 0) {
             //Answer check
             println(userAnswer + " - " + tempKeywordList?.get(0))
-            if (userAnswer.trim().equals(tempKeywordList?.get(0),true)) {
+            if (userAnswer.trim().equals(tempKeywordList?.get(0), true)) {
                 val bundle = bundleOf("selectedCategory" to tempKeywordList)
                 tempKeywordList.removeAt(0)
-                view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
+                view?.findNavController()
+                    ?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
+                val soundBox = MediaPlayer.create(this.context, R.raw.ding)
+                soundBox.start()
             } else {
                 answerTextView.setText("Wrong!")
             }
         }
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
+    private fun isUnique(list: MutableList<Int>, toBeChecked: Int): Boolean {
+        var isUnique = true
+        for (i in 0 until list.size) {
+            if (list[i] == toBeChecked) {
+                return false
+            }
+        }
+        return true
     }
 }
 

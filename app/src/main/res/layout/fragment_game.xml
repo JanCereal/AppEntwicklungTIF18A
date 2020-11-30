@@ -34,7 +34,7 @@
         android:layout_height="145dp"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagePanel1"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
@@ -43,7 +43,7 @@
         android:id="@+id/imagePanel4"
         android:layout_width="145dp"
         android:layout_height="145dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
 
     <Button
         android:id="@+id/btnAnswer"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
@@ -83,30 +83,43 @@
     <TextView
         android:id="@+id/charCountTextView"
         android:layout_width="234dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginBottom="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
         android:gravity="center"
         android:text="word char count"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/answerTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
 
     <FrameLayout
-        android:layout_width="380dp"
-        android:layout_height="405dp"
+        android:id="@+id/frameLayout2"
+        android:layout_width="382dp"
+        android:layout_height="360dp"
         android:layout_marginStart="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="18dp"
         android:layout_marginRight="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/textview_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btnReroll"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginBottom="28dp"
+        android:text="Reroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
