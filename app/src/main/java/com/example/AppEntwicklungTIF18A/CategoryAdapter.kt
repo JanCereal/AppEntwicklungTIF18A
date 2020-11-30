@@ -47,7 +47,7 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_template, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.template_category, parent, false)
         return ExampleViewHolder(view)
     }
 

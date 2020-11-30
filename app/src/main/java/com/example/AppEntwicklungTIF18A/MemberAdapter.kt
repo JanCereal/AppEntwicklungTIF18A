@@ -29,7 +29,7 @@ class MemberAdapter(memberList: ArrayList<String>, parent: ViewGroup?, categoryN
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.member_template, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.template_member, parent, false)
         return MemberViewHolder(view)
     }
 
