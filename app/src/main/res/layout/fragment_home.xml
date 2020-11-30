@@ -6,7 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray">
 
     <Button
         android:id="@+id/btnQuickplay"
@@ -18,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/btnCategory"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
@@ -48,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCategory" /> -->
 
     <TextView
         android:id="@+id/textView"
