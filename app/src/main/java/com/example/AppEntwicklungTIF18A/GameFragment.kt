@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -37,17 +38,24 @@ class GameFragment : Fragment() {
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
 
-        //search
+        //region search
         if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
             parseSearchJSON(binding, tempKeywordList[0])
-            binding.charCountTextView.setText("Das Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben")
+
+            //region clueCheck
+            val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
+            if (sharedPrefHint != null && sharedPrefHint.getString(R.string.wordHint.toString(), "").equals("1")) {
+                binding.charCountTextView.text = "Das Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben"
+            }
+            //endregion
+
         } else {
             println("rKeywordList empty")
         }
-        //
+        //endregion
 
-        //Buttons and EnterKey (UserAnswerAction)
+        // region Buttons and EnterKey (UserAnswerAction)
         binding.answerTextView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 checkAnswer(tempKeywordList as ArrayList<String>, v, inputManager)
@@ -56,18 +64,18 @@ class GameFragment : Fragment() {
             false
         })
         binding.btnAnswer.setOnClickListener { view: View ->
-            var userAnswer = answerTextView.text.toString()
             if (tempKeywordList?.size != 0) {
                 checkAnswer(tempKeywordList as ArrayList<String>, view, inputManager)
             }
         }
-        //
 
         binding.btnReroll.setOnClickListener { view: View ->
             if (tempKeywordList != null) {
                 parseSearchJSON(binding, tempKeywordList[0])
             }
         }
+        //endregion
+
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         return binding.root
     }
@@ -87,12 +95,14 @@ class GameFragment : Fragment() {
 
                     val randArray = mutableListOf<Int>()
                     var done = 0
-                    while(true) {
+                    while (true) {
                         val tempRand = Random.nextInt(0 until jsonArray.length())
                         if (isUnique(randArray, tempRand)) {
                             randArray.add(done, tempRand)
-                            done ++
-                            if(done == 4){break}
+                            done++
+                            if (done == 4) {
+                                break
+                            }
                         }
                     }
 
@@ -117,22 +127,22 @@ class GameFragment : Fragment() {
         requestQueue?.add(request)
     }
 
-    private fun checkAnswer(
-        tempKeywordList: ArrayList<String>,
-        v: View,
-        inputManager: InputMethodManager
-    ) {
+    private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
         var userAnswer = answerTextView.text.toString()
         if (tempKeywordList?.size != 0) {
-            //Answer check
-            println(userAnswer + " - " + tempKeywordList?.get(0))
             if (userAnswer.trim().equals(tempKeywordList?.get(0), true)) {
                 val bundle = bundleOf("selectedCategory" to tempKeywordList)
                 tempKeywordList.removeAt(0)
-                view?.findNavController()
-                    ?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
-                val soundBox = MediaPlayer.create(this.context, R.raw.ding)
-                soundBox.start()
+                view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
+
+                //region soundCheck
+                val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
+                if (sharedPrefHint != null && sharedPrefHint.getString(R.string.sounds.toString(), "").equals("1")) {
+                    val soundBox = MediaPlayer.create(this.context, R.raw.ding)
+                    soundBox.start()
+                }
+                //endregion
+
             } else {
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
@@ -150,5 +160,6 @@ class GameFragment : Fragment() {
         }
         return true
     }
+
 }
 
