@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_nav.*
 
@@ -14,13 +13,12 @@ class NavActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
+        NavigationUI.setupActionBarWithNavController(this, this.findNavController(R.id.nav_host_fragment))
 
-        val navigationBarBottom = findViewById<BottomNavigationView>(R.id.navBarBottom)
+        // TODO FIX DESTINATION ISSUE
+        val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navBarBottom)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        NavigationUI.setupWithNavController(navigationBarBottom, navController)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+        NavigationUI.setupWithNavController(bottomNavigationBar, navHostFragment.navController)
 
         val homeFragment = HomeFragment()
         val categoryFragment = CategoryFragment()
@@ -37,10 +35,6 @@ class NavActivity : AppCompatActivity() {
                 R.id.imgSettings -> replaceFragment(settingsFragment)
             }
             true
-        }
-
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-
         }
     }
 
