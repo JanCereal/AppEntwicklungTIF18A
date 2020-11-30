@@ -29,7 +29,7 @@ class CategoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CategoryAdapter(categories, container)
 
-        fun localAddMethod(v:View){
+        fun localAddMethod(v : View) {
             categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
             recyclerView.adapter = CategoryAdapter(categories, container)
             IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
@@ -42,10 +42,9 @@ class CategoryFragment : Fragment() {
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 categories.forEach {
-                    println(txtAddCategory.text.toString().toLowerCase())
-                    println(it.first.toLowerCase())
                     if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
                         Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
+
                         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
                         txtAddCategory.text.clear()
                         return@OnKeyListener true
