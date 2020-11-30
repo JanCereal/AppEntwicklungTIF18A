@@ -57,6 +57,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@mipmap/ic_icon_round"/>
+        app:srcCompat="@mipmap/ic_icon"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

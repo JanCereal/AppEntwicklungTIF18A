@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.ImageSwitcher
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.AppEntwicklungTIF18A.databinding.FragmentSettingsBinding
@@ -20,29 +22,39 @@ class SettingsFragment : Fragment() {
     ): View {
         val binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
-        //switch startValue check
-        binding.switchCountClue.isChecked = sharedPrefHint != null && sharedPrefHint.getString(R.string.wordHint.toString(), "").equals("1")
+        //region SwitchChecks
+        switchCheck(binding.switchCountClue, R.string.wordHint)
+        switchCheck(binding.switchSound, R.string.sounds)
+        switchCheck(binding.switchDarkmode, R.string.darkmode)
+        switchCheck(binding.switchLanguage, R.string.language)
+        //endregion
 
-        binding.switchCountClue.setOnCheckedChangeListener { buttonView, isChecked ->
+        return binding.root
+    }
+
+    private fun switchCheck(switch: Switch, key :Int){
+        val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
+        switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")
+
+        switch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 // The switch is enabled
-                if (sharedPrefHint != null) {
-                    with(sharedPrefHint.edit()) {
-                        putString(R.string.wordHint.toString(), "1" )
+                if (sharedPref != null) {
+                    with(sharedPref.edit()) {
+                        putString(key.toString(), "1" )
                         apply()
                     }
                 }
             } else {
                 // The switch is disabled
-                if (sharedPrefHint != null) {
-                    with(sharedPrefHint.edit()) {
-                        putString(R.string.wordHint.toString(), "0" )
+                if (sharedPref != null) {
+                    with(sharedPref.edit()) {
+                        putString(key.toString(), "0" )
                         apply()
                     }
                 }
             }
         }
-        return binding.root
     }
+
 }

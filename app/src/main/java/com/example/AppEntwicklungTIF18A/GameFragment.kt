@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -132,10 +133,16 @@ class GameFragment : Fragment() {
             if (userAnswer.trim().equals(tempKeywordList?.get(0), true)) {
                 val bundle = bundleOf("selectedCategory" to tempKeywordList)
                 tempKeywordList.removeAt(0)
-                view?.findNavController()
-                    ?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
-                val soundBox = MediaPlayer.create(this.context, R.raw.ding)
-                soundBox.start()
+                view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
+
+                //region soundCheck
+                val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
+                if (sharedPrefHint != null && sharedPrefHint.getString(R.string.sounds.toString(), "").equals("1")) {
+                    val soundBox = MediaPlayer.create(this.context, R.raw.ding)
+                    soundBox.start()
+                }
+                //endregion
+
             } else {
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
