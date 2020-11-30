@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.AppEntwicklungTIF18A.databinding.FragmentCategoryBinding
 import kotlinx.android.synthetic.main.fragment_category.*
 
@@ -58,6 +58,10 @@ class CategoryFragment : Fragment() {
 
         binding.btnCreateCategory.setOnClickListener{ v : View ->
             localAddMethod(v)
+        }
+
+        binding.txtAddCategory.doAfterTextChanged {
+            binding.btnCreateCategory.isEnabled = binding.txtAddCategory.text.trim().isNotEmpty()
         }
         return binding.root
     }

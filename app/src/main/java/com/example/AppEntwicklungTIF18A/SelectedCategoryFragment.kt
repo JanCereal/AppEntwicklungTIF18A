@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.AppEntwicklungTIF18A.databinding.FragmentSelectedcategoryBinding
@@ -38,7 +39,6 @@ class SelectedCategoryFragment : Fragment() {
             IO_updateClass.addSingleCategoryWord(context, categoryName , txtAddMember.text.toString().trim())
 
             inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
             txtAddMember.text.clear()
         }
 
@@ -53,6 +53,10 @@ class SelectedCategoryFragment : Fragment() {
             }
             false
         })
+
+        binding.txtAddMember.doAfterTextChanged {
+            binding.btnAddMember.isEnabled = binding.txtAddMember.text.trim().isNotEmpty()
+        }
         return binding.root
     }
 }
