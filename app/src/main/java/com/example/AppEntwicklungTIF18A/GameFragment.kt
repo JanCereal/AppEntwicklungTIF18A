@@ -101,7 +101,8 @@ class GameFragment : Fragment() {
                 tempKeywordList.removeAt(0)
                 view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
             } else {
-                answerTextView.setText("Wrong!")
+                answerTextView.hint = "Wrong!"
+                answerTextView.setText("")
             }
         }
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
