@@ -4,24 +4,27 @@ import android.content.Context
 import com.beust.klaxon.JsonObject
 import org.json.JSONObject
 import java.io.File
+import kotlin.reflect.jvm.internal.impl.renderer.KeywordStringsGenerated
 
 class IO_updateClass {
     companion object {
         private const val FILE_CONST = "categoryData.json"
+        private const val KEYWORD_CONST = "<--KeyWord-->Empty_Word<--KeyWord-->"
         private var categoryCollection = ArrayList<Pair<String, MutableList<String>>>()
 
         fun addSingleCategoryWord(context: Context?, categoryName: String, addedWord: String) {
             var data = readCategoryJson(context)
-            val oldValues = data?.get(categoryName).toString().trimEnd(']') + "," +"\"" +addedWord+ "\"" + "]"
+            val oldValues = data?.get(categoryName).toString()
+                .trimEnd(']') + "," + "\"" + addedWord + "\"" + "]"
             data?.put(categoryName, oldValues)
             writeJsonData(context, data)
         }
 
         fun deleteSingleCategoryWord(context: Context?, categoryName: String, deletedWord: String) {
             var data = readCategoryJson(context)
-            var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",","")
-            oldValues = oldValues?.replace(",\"$deletedWord\"","")
-            oldValues = oldValues?.replace("\"$deletedWord\"","")
+            var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",", "")
+            oldValues = oldValues?.replace(",\"$deletedWord\"", "")
+            oldValues = oldValues?.replace("\"$deletedWord\"", "")
             oldValues = oldValues?.trim(',')
             data?.put(categoryName, oldValues)
             writeJsonData(context, data)
@@ -29,7 +32,7 @@ class IO_updateClass {
 
         fun addCategory(context: Context?, categoryName: String) {
             var data = readCategoryJson(context)
-            data?.put(categoryName, "")
+            data?.put(categoryName, KEYWORD_CONST)
             writeJsonData(context, data)
         }
 
@@ -47,26 +50,17 @@ class IO_updateClass {
                 var words = ""
                 data[categoryName].let { any -> words += any }
                 words = words.replace(Regex("""[$\[\]\"]"""), "")
-                val listWords = words.split(',')
-                categoryCollection.add(Pair(categoryName, listWords as MutableList<String>))
+                val listWords = words.split(',').toMutableList()
+                listWords.remove(KEYWORD_CONST)
+                categoryCollection.add(Pair(categoryName, listWords))
             }
             return categoryCollection
         }
 
-        private fun writeJsonData(context: Context?, data: JSONObject?) {
-            try {
-                context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
-                    output?.write(data.toString().toByteArray())
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
         fun writeCategoryJson(context: Context?) {
             //TODO convert was auch immer wir für ne liste benutzen zu Map ??
-            var file = File(context?.filesDir?.absolutePath, "categoryData.json")
-            if (file.exists()){
+            var file = File(context?.filesDir?.absolutePath, FILE_CONST)
+            if (file.exists()) {
                 return;
             }
 
@@ -84,6 +78,19 @@ class IO_updateClass {
             }
         }
 
+
+        //region HelpMethods
+
+        private fun writeJsonData(context: Context?, data: JSONObject?) {
+            try {
+                context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
+                    output?.write(data.toString().toByteArray())
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         private fun readCategoryJson(context: Context?): JSONObject? {
             var jsonObject: JSONObject? = null
             context?.openFileInput(FILE_CONST).use { stream ->
@@ -94,5 +101,7 @@ class IO_updateClass {
             }
             return jsonObject
         }
+
+        //endregion
     }
 }

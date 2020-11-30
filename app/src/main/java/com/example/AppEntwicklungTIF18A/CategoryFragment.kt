@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,36 +22,43 @@ class CategoryFragment : Fragment() {
     ): View? {
         val binding = FragmentCategoryBinding.inflate(layoutInflater)
         val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val categories = ArrayList<Pair<String, MutableList<String>>>()
-        
-        categories.add(Pair("Nature", mutableListOf("Tree", "Desert", "Forest")))
-        categories.add(Pair("Cars", mutableListOf("Audi", "Mercedes", "Opel")))
-        categories.add(Pair("Brands", mutableListOf("Adidas", "Nike", "Puma")))
+        val categories = IO_updateClass.getSavedFile(context)
 
         val recyclerView = binding.recyclerViewCategory
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CategoryAdapter(categories)
+        recyclerView.adapter = CategoryAdapter(categories, container)
+
+        fun localAddMethod(v : View) {
+            categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
+            recyclerView.adapter = CategoryAdapter(categories, container)
+            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
+
+            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+
+            txtAddCategory.text.clear()
+        }
 
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                AddCategory(categories, recyclerView, v, inputManager)
+                categories.forEach {
+                    if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
+                        Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
+
+                        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+                        txtAddCategory.text.clear()
+                        return@OnKeyListener true
+                    }
+                }
+                localAddMethod(v)
                 return@OnKeyListener true
             }
             false
         })
+
         binding.btnCreateCategory.setOnClickListener{ v : View ->
-            AddCategory(categories, recyclerView, v, inputManager)
+            localAddMethod(v)
         }
         return binding.root
-    }
-
-    fun AddCategory(categories: ArrayList<Pair<String, MutableList<String>>>, recyclerView: RecyclerView, v: View, inputManager: InputMethodManager) {
-        categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
-        recyclerView.adapter = CategoryAdapter(categories)
-
-        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
-        txtAddCategory.text.clear()
     }
 }
