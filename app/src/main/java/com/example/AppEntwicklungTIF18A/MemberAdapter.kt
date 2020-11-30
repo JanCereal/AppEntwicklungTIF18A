@@ -7,8 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MemberAdapter(memberList: ArrayList<String>) : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
+class MemberAdapter(memberList: ArrayList<String>, parent: ViewGroup?, categoryName : String) : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     var members = memberList
+    var context = parent?.context
+    var categoryName = categoryName
 
     inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var btnDelete = itemView.findViewById<ImageView>(R.id.imgDeleteMember)
@@ -18,6 +20,7 @@ class MemberAdapter(memberList: ArrayList<String>) : RecyclerView.Adapter<Member
             btnDelete.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
+                    IO_updateClass.deleteSingleCategoryWord(context, categoryName, members[adapterPosition])
                     members.removeAt(position)
                     notifyItemRemoved(position)
                 }
