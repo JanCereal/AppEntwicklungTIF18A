@@ -7,4 +7,7 @@
     <string name="darkmode">1</string>
     <string name="language">1</string>
 
+    <string name="highScore">1</string>
+    <string name="currentScore">1</string>
+
 </resources>

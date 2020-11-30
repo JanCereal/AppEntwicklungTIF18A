@@ -35,6 +35,9 @@ class HomeFragment : Fragment() {
         binding.btnCategory.setOnClickListener { view: View ->
             view.findNavController().navigate(R.id.action_homeFragment_to_categoryFragment)
         }
+        binding.btnStats.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_homeFragment_to_statsFragment)
+        }
         return binding.root
     }
 
