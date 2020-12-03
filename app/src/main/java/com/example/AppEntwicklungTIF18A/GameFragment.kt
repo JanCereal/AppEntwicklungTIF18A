@@ -124,9 +124,9 @@ class GameFragment : Fragment() {
     }
 
     private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
-        var userAnswer = answerTextView.text.toString()
-        if (tempKeywordList?.size != 0) {
-            if (userAnswer.trim().equals(tempKeywordList?.get(0), true)) {
+        val userAnswer = answerTextView.text.toString()
+        if (tempKeywordList.size != 0) {
+            if (userAnswer.trim().equals(tempKeywordList[0], true)) {
                 val bundle = bundleOf("selectedCategory" to tempKeywordList)
                 tempKeywordList.removeAt(0)
                 view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
@@ -148,7 +148,6 @@ class GameFragment : Fragment() {
     }
 
     private fun isUnique(list: MutableList<Int>, toBeChecked: Int): Boolean {
-        var isUnique = true
         for (i in 0 until list.size) {
             if (list[i] == toBeChecked) {
                 return false
@@ -156,6 +155,5 @@ class GameFragment : Fragment() {
         }
         return true
     }
-
 }
 

@@ -1,6 +1,5 @@
 package com.example.AppEntwicklungTIF18A
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,11 +28,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun getRandomKeywordList(): MutableList<String>? {
-        var list: ArrayList<Pair<String, MutableList<String>>> =
-            IO_updateClass.getSavedFile(context)
+        val list: ArrayList<Pair<String, MutableList<String>>> = IO_updateClass.getSavedFile(context)
 
         list.forEach {
-            var randomList = list[Random.nextInt(0, list.size)].second
+            val randomList = list[Random.nextInt(0, list.size)].second
             if (randomList.size != 0) {
                 return randomList
             }
