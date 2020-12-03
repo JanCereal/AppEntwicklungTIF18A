@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/white">
 
     <Button
         android:id="@+id/btnQuickplay"
@@ -18,38 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <!-- <Button
-        android:id="@+id/btnCategory"
-        android:layout_width="156dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Kategorien"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnQuickplay" />
-
-    <Button
-        android:id="@+id/btnSettings"
-        android:layout_width="156dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Einstellungen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStats" />
-
-    <Button
-        android:id="@+id/btnStats"
-        android:layout_width="156dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Statistik"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCategory" /> -->
 
     <TextView
         android:id="@+id/textView"

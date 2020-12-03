@@ -1,12 +1,12 @@
 package com.example.AppEntwicklungTIF18A
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.example.AppEntwicklungTIF18A.databinding.FragmentHomeBinding
 import kotlin.random.Random
@@ -21,20 +21,10 @@ class HomeFragment : Fragment() {
         IO_updateClass.writeCategoryJson(context)
         val binding = FragmentHomeBinding.inflate(layoutInflater)
 
-
         binding.btnQuickplay.setOnClickListener { view: View ->
             val bundle = bundleOf("selectedCategory" to getRandomKeywordList())
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
-        /* binding.btnSettings.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
-        }
-        binding.btnCategory.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_homeFragment_to_categoryFragment)
-        }
-        binding.btnStats.setOnClickListener { view: View ->
-            view.findNavController().navigate(R.id.action_homeFragment_to_statsFragment)
-        } */
         return binding.root
     }
 
