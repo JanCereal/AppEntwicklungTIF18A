@@ -7,17 +7,13 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.AppEntwicklungTIF18A.databinding.FragmentGameBinding
@@ -128,9 +124,9 @@ class GameFragment : Fragment() {
     }
 
     private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
-        var userAnswer = answerTextView.text.toString()
-        if (tempKeywordList?.size != 0) {
-            if (userAnswer.trim().equals(tempKeywordList?.get(0), true)) {
+        val userAnswer = answerTextView.text.toString()
+        if (tempKeywordList.size != 0) {
+            if (userAnswer.trim().equals(tempKeywordList[0], true)) {
                 val bundle = bundleOf("selectedCategory" to tempKeywordList)
                 tempKeywordList.removeAt(0)
                 view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
@@ -152,7 +148,6 @@ class GameFragment : Fragment() {
     }
 
     private fun isUnique(list: MutableList<Int>, toBeChecked: Int): Boolean {
-        var isUnique = true
         for (i in 0 until list.size) {
             if (list[i] == toBeChecked) {
                 return false
@@ -160,6 +155,5 @@ class GameFragment : Fragment() {
         }
         return true
     }
-
 }
 

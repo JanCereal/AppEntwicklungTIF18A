@@ -5,20 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="4dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#000">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_margin="4dp"
+        android:background="#fff">
 
         <TextView
-            android:id="@+id/txtCategoryName"
+            android:id="@+id/txtMemberName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
-            android:text="CategoryName"
+            android:text="CategoryMember"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -27,27 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imgPlay"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="Play"
-            android:tint="#009900"
-            app:layout_constraintEnd_toStartOf="@+id/imgEdit"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_play" />
-
-        <ImageView
-            android:id="@+id/imgEdit"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:contentDescription="Edit"
-            android:tint="#0066ff"
-            app:layout_constraintEnd_toStartOf="@+id/imgDelete"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_edit" />
-
-        <ImageView
-            android:id="@+id/imgDelete"
+            android:id="@+id/imgDeleteMember"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="Delete"

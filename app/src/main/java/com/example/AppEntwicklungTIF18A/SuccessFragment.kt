@@ -26,10 +26,12 @@ class SuccessFragment : Fragment() {
         if (tempKeywordList?.size != 0) {
             binding.btnNext.setOnClickListener { view: View ->
                 view.findNavController().navigate(R.id.action_successFragment_to_gameFragment, bundle)
+                (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             }
         } else {
             binding.btnNext.setOnClickListener { view: View ->
                 view.findNavController().navigate(R.id.action_successFragment_to_homeFragment)
+                (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             }
         }
         return binding.root

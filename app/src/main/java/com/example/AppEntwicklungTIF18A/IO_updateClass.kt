@@ -1,10 +1,8 @@
 package com.example.AppEntwicklungTIF18A
 
 import android.content.Context
-import com.beust.klaxon.JsonObject
 import org.json.JSONObject
 import java.io.File
-import kotlin.reflect.jvm.internal.impl.renderer.KeywordStringsGenerated
 
 class IO_updateClass {
     companion object {
