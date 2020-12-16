@@ -1,48 +1,67 @@
 package com.example.AppEntwicklungTIF18A
 
 import android.content.Context
+import android.provider.MediaStore
 import org.json.JSONObject
 import java.io.File
 
 class IO_updateClass {
     companion object {
         private const val FILE_CONST = "categoryData.json"
+        private const val STATS_CONST = "statsData.json"
         private const val KEYWORD_CONST = "<--KeyWord-->Empty_Word<--KeyWord-->"
         private var categoryCollection = ArrayList<Pair<String, MutableList<String>>>()
+        private var statsCollection = ArrayList<Pair<String,String>>()
+
+        fun writeHistory(context: Context?, categoryName: String?, mistakes:Int?){
+            var data = readJson(context, STATS_CONST)
+            data?.put(data.length().toString(),  Pair(categoryName, mistakes))
+            writeJsonData(context, STATS_CONST, data)
+        }
+
+        fun getStats(context: Context?): ArrayList<Pair<String,String>>{
+            val data = readJson(context, STATS_CONST)
+            statsCollection.clear()
+            data?.keys()?.forEach { it ->
+                println(data)
+                var value = data[it].toString().trim('(').trim(')').split(',')
+                statsCollection.add(Pair(value[0], value[1]))
+            }
+            return statsCollection
+        }
 
         fun addSingleCategoryWord(context: Context?, categoryName: String, addedWord: String) {
-            var data = readCategoryJson(context)
+            var data = readJson(context, FILE_CONST)
             val oldValues = data?.get(categoryName).toString()
                 .trimEnd(']') + "," + "\"" + addedWord + "\"" + "]"
             data?.put(categoryName, oldValues)
-            writeJsonData(context, data)
+            writeJsonData(context,FILE_CONST, data)
         }
 
         fun deleteSingleCategoryWord(context: Context?, categoryName: String, deletedWord: String) {
-            var data = readCategoryJson(context)
+            var data = readJson(context, FILE_CONST)
             var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",", "")
             oldValues = oldValues?.replace(",\"$deletedWord\"", "")
             oldValues = oldValues?.replace("\"$deletedWord\"", "")
             oldValues = oldValues?.trim(',')
             data?.put(categoryName, oldValues)
-            writeJsonData(context, data)
+            writeJsonData(context,FILE_CONST, data)
         }
 
         fun addCategory(context: Context?, categoryName: String) {
-            var data = readCategoryJson(context)
+            var data = readJson(context, FILE_CONST)
             data?.put(categoryName, KEYWORD_CONST)
-            writeJsonData(context, data)
+            writeJsonData(context, FILE_CONST, data)
         }
 
         fun deleteCategory(context: Context?, categoryName: String) {
-            var data = readCategoryJson(context)
+            var data = readJson(context, FILE_CONST)
             data?.remove(categoryName)
-            writeJsonData(context, data)
+            writeJsonData(context,FILE_CONST, data)
         }
 
-
         fun getSavedFile(context: Context?): ArrayList<Pair<String, MutableList<String>>> {
-            val data = readCategoryJson(context)
+            val data = readJson(context, FILE_CONST)
             categoryCollection.clear()
             data?.keys()?.forEach { categoryName ->
                 var words = ""
@@ -55,33 +74,56 @@ class IO_updateClass {
             return categoryCollection
         }
 
+        fun deleteCategoryFile(context: Context?){
+           File(context?.filesDir?.absolutePath, FILE_CONST).delete()
+        }
+
+        fun deleteStatsFile(context: Context?){
+            File(context?.filesDir?.absolutePath, STATS_CONST).delete()
+        }
+
         fun writeCategoryJson(context: Context?) {
             //TODO convert was auch immer wir für ne liste benutzen zu Map ??
             var file = File(context?.filesDir?.absolutePath, FILE_CONST)
-            if (file.exists()) {
-                return;
-            }
+            if (!file.exists()) {
+                var categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
+                categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
 
-            var categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
-            categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
+                var jsonObject = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
 
-            var jsonObject = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
-
-            try {
-                context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
-                    output?.write(jsonObject.toByteArray())
+                try {
+                    context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
+                        output?.write(jsonObject.toByteArray())
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }
+            var statsFile = File(context?.filesDir?.absolutePath, STATS_CONST)
+            if (!statsFile.exists()) {
+                try {
+                    var js = JSONObject().toString()
+                    context?.openFileOutput(STATS_CONST, Context.MODE_PRIVATE).use { output ->
+                        output?.write(js.toByteArray())
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
 
-
         //region HelpMethods
+        private fun getCategoryLength(context: Context?, categoryName: String?): Int? {
+            getSavedFile(context)?.forEach(){
+                if (it.first == categoryName)
+                    return it.second.size
+            }
+            return null
+        }
 
-        private fun writeJsonData(context: Context?, data: JSONObject?) {
+        private fun writeJsonData(context: Context?,file: String, data: JSONObject?) {
             try {
-                context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
+                context?.openFileOutput(file, Context.MODE_PRIVATE).use { output ->
                     output?.write(data.toString().toByteArray())
                 }
             } catch (e: Exception) {
@@ -89,9 +131,9 @@ class IO_updateClass {
             }
         }
 
-        private fun readCategoryJson(context: Context?): JSONObject? {
+         private fun readJson(context: Context?, file:String): JSONObject? {
             var jsonObject: JSONObject? = null
-            context?.openFileInput(FILE_CONST).use { stream ->
+            context?.openFileInput(file).use { stream ->
                 stream?.bufferedReader().use {
                     val data = JSONObject(it?.readText())
                     jsonObject = data

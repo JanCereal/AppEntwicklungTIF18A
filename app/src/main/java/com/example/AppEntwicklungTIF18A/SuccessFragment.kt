@@ -19,9 +19,10 @@ class SuccessFragment : Fragment() {
     ): View? {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         val binding = FragmentSuccessBinding.inflate(layoutInflater)
-
+        val categoryName = arguments?.getString("categoryName")
+        val mistakes = arguments?.getInt("Mistakes")
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
-        val bundle = bundleOf("selectedCategory" to tempKeywordList)
+        val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to categoryName,  "Mistakes" to mistakes)
 
         if (tempKeywordList?.size != 0) {
             binding.btnNext.setOnClickListener { view: View ->
@@ -30,6 +31,7 @@ class SuccessFragment : Fragment() {
             }
         } else {
             binding.btnNext.setOnClickListener { view: View ->
+                IO_updateClass.writeHistory(context, categoryName, mistakes)
                 view.findNavController().navigate(R.id.action_successFragment_to_homeFragment)
                 (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             }
