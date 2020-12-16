@@ -20,8 +20,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        IO_updateClass.writeCategoryJson(context)
-        var list = IO_updateClass.getStats(context)
+        IO_updateClass.writeFiles(context)
         val binding = FragmentHomeBinding.inflate(layoutInflater)
 
         binding.btnQuickplay.setOnClickListener { view: View ->
@@ -47,10 +46,10 @@ class HomeFragment : Fragment() {
         val list: ArrayList<Pair<String, MutableList<String>>> = IO_updateClass.getSavedFile(context)
 
         list.forEach { _ ->
-            val listName = list[Random.nextInt(0, list.size)].first
-            val randomList = list[Random.nextInt(0, list.size)].second
+            val random = Random.nextInt(0, list.size)
+            val listName = list[random].first
+            val randomList = list[random].second
             if (randomList.size != 0) {
-
                 return Pair(listName, randomList)
             }
         }

@@ -82,7 +82,7 @@ class IO_updateClass {
             File(context?.filesDir?.absolutePath, STATS_CONST).delete()
         }
 
-        fun writeCategoryJson(context: Context?) {
+        fun writeFiles(context: Context?) {
             //TODO convert was auch immer wir für ne liste benutzen zu Map ??
             var file = File(context?.filesDir?.absolutePath, FILE_CONST)
             if (!file.exists()) {
@@ -113,7 +113,7 @@ class IO_updateClass {
         }
 
         //region HelpMethods
-        private fun getCategoryLength(context: Context?, categoryName: String?): Int? {
+        fun getCategoryLength(context: Context?, categoryName: String?): Int? {
             getSavedFile(context)?.forEach(){
                 if (it.first == categoryName)
                     return it.second.size
