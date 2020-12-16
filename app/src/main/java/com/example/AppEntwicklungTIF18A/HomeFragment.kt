@@ -1,9 +1,11 @@
 package com.example.AppEntwicklungTIF18A
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -27,6 +29,16 @@ class HomeFragment : Fragment() {
             val bundle = bundleOf("selectedCategory" to list?.second, "categoryName" to list?.first, "Mistakes" to mistakes)
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
+
+        //region DarkmodeCheck
+        val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.darkmode), Context.MODE_PRIVATE)
+        if (sharedPrefHint != null && sharedPrefHint.getString(R.string.darkmode.toString(), "").equals("1")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+        //endregion
+
         return binding.root
     }
 

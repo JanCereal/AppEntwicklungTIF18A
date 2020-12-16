@@ -18,15 +18,15 @@ Must-Have:
 - Der Nutzer hat die Möglichkeit, Einstellungen in der App dauerhaft vorzunehmen (Bspw. Tipps anzeigen Ja/Nein) ✔
 - Einbauen von Sounds (z.B. beim erraten eines Worts) ✔
 - Spieler Statistik (% Quote das Wort zu erraten) / letzte 5 Spiele / persönlicher Highscore
-- Spielerdaten Reseten
+- Spielerdaten Reseten ✔
 - Refresh (Bilder neu suchen) ✔
 
 
 Nice-To-Have:
 
-- Anzeigen des Punktestandes beim spielen einer Kategorie
+- Anzeigen des Punktestandes beim spielen einer Kategorie ✔
 - Push-Notification
-- Darkmode
+- Darkmode ✔
 - Spieler Profil (Mit Login)
 
 Erklärungen:

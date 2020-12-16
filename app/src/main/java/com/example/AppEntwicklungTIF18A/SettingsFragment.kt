@@ -9,6 +9,7 @@ import android.widget.CompoundButton
 import android.widget.ImageSwitcher
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.AppEntwicklungTIF18A.databinding.FragmentSettingsBinding
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -25,7 +26,7 @@ class SettingsFragment : Fragment() {
         //region SwitchChecks
         switchCheck(binding.switchCountClue, R.string.wordHint)
         switchCheck(binding.switchSound, R.string.sounds)
-        switchCheck(binding.switchDarkmode, R.string.darkmode)
+        switchDarkCheck(binding.switchDarkmode, R.string.darkmode)
         switchCheck(binding.switchLanguage, R.string.language)
         //endregion
 
@@ -51,6 +52,33 @@ class SettingsFragment : Fragment() {
                     with(sharedPref.edit()) {
                         putString(key.toString(), "0" )
                         apply()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun switchDarkCheck(switch: Switch, key :Int){
+        val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
+        switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")
+
+        switch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                // The switch is enabled
+                if (sharedPref != null) {
+                    with(sharedPref.edit()) {
+                        putString(key.toString(), "1" )
+                        apply()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                }
+            } else {
+                // The switch is disabled
+                if (sharedPref != null) {
+                    with(sharedPref.edit()) {
+                        putString(key.toString(), "0" )
+                        apply()
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     }
                 }
             }
