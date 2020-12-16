@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="#000"
     app:cardCornerRadius="5dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="#000">
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -33,7 +33,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="Play"
-            android:tint="#009900"
             app:layout_constraintEnd_toStartOf="@+id/imgEdit"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_play" />
