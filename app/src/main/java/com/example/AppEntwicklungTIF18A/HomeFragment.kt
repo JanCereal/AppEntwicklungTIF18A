@@ -19,10 +19,7 @@ class HomeFragment : Fragment() {
     ): View {
 
         IO_updateClass.writeCategoryJson(context)
-        println(IO_updateClass.getStats(context))
         var list = IO_updateClass.getStats(context)
-        println(list[0].first)
-        println(list[0].second)
         val binding = FragmentHomeBinding.inflate(layoutInflater)
 
         binding.btnQuickplay.setOnClickListener { view: View ->
