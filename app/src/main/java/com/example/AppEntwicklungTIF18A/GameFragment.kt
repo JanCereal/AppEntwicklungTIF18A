@@ -24,6 +24,7 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class GameFragment : Fragment() {
+    private var points: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +35,7 @@ class GameFragment : Fragment() {
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
 
+        println(tempKeywordList)
         //region search
         if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
@@ -126,8 +128,10 @@ class GameFragment : Fragment() {
     private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
         val userAnswer = answerTextView.text.toString()
         if (tempKeywordList.size != 0) {
+            // Richtige Antwort
             if (userAnswer.trim().equals(tempKeywordList[0], true)) {
-                val bundle = bundleOf("selectedCategory" to tempKeywordList)
+                points++
+                val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to arguments?.getString("categoryName"),  "Points" to points)
                 tempKeywordList.removeAt(0)
                 view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
 
@@ -140,6 +144,7 @@ class GameFragment : Fragment() {
                 //endregion
 
             } else {
+                points = 0
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
             }
