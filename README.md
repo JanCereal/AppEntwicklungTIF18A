@@ -26,7 +26,7 @@ Nice-To-Have:
 
 - Anzeigen des Punktestandes beim spielen einer Kategorie ✔
 - Push-Notification
-- Darkmode
+- Darkmode ✔
 - Spieler Profil (Mit Login)
 
 Erklärungen:
