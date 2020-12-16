@@ -1,6 +1,5 @@
 package com.example.AppEntwicklungTIF18A
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoryAdapter(
-   exampleList: ArrayList<Pair<String, MutableList<String>>>,
-   parent: ViewGroup?
-) : RecyclerView.Adapter<CategoryAdapter.ExampleViewHolder>() {
+class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>, parent: ViewGroup?) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
    var categories = exampleList
    var context = parent?.context
 
-   inner class ExampleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+   inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
       var categoryName = itemView.findViewById<TextView>(R.id.txtCategoryName)
       var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
       var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
@@ -35,11 +31,12 @@ class CategoryAdapter(
          }
          playImage.setOnClickListener { v: View ->
             val position = adapterPosition
+            var mistakes = 0
             if (position != RecyclerView.NO_POSITION) {
                if (categories[position].second.isEmpty()) {
                   Toast.makeText(context, "Selected Category is empty!", Toast.LENGTH_LONG).show()
                } else {
-                  val bundle = bundleOf("selectedCategory" to ArrayList<String>(categories[position].second))
+                  val bundle = bundleOf("selectedCategory" to ArrayList<String>(categories[position].second), "categoryName" to categories[position].first, "Mistakes" to mistakes)
                   v.findNavController().navigate(R.id.action_categoryFragment_to_gameFragment, bundle)
                }
             }
@@ -54,16 +51,16 @@ class CategoryAdapter(
       }
    }
 
-   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
+   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
       val view = LayoutInflater.from(parent.context).inflate(R.layout.template_category, parent, false)
-      return ExampleViewHolder(view)
+      return CategoryViewHolder(view)
    }
 
    override fun getItemCount(): Int {
       return categories.size
    }
 
-   override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
+   override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
       holder.categoryName.text = categories[position].first
    }
 }
