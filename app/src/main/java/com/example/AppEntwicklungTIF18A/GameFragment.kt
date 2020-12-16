@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -40,11 +41,13 @@ class GameFragment : Fragment() {
             tempKeywordList.shuffle()
             parseSearchJSON(binding, tempKeywordList[0])
 
-            //region clueCheck
+            //region display Hint/Mistakes
             val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
             if (sharedPrefHint != null && sharedPrefHint.getString(R.string.wordHint.toString(), "").equals("1")) {
-                binding.charCountTextView.text = "Das Wort hat " + tempKeywordList[0].toCharArray().size + " Buchstaben"
+                binding.charCountTextView.text = "Tipp: " + tempKeywordList[0].toCharArray().size + " Buchstaben"
             }
+            //SetMistakes
+            binding.MistakeCountTextView.text = "Fehler: " + mistakes
             //endregion
 
         } else {
@@ -139,10 +142,15 @@ class GameFragment : Fragment() {
                 }
                 //endregion
 
+                //SetMistakes
+                MistakeCountTextView.text = "Fehler: " + mistakes
+
             } else {
                 mistakes++
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
+                //SetMistakes
+                MistakeCountTextView.text = "Fehler: " + mistakes
             }
         }
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
