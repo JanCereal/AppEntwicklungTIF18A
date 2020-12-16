@@ -17,13 +17,18 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        IO_updateClass.deleteFile(context)
+
         IO_updateClass.writeCategoryJson(context)
+        println(IO_updateClass.getStats(context))
+        var list = IO_updateClass.getStats(context)
+        println(list[0].first)
+        println(list[0].second)
         val binding = FragmentHomeBinding.inflate(layoutInflater)
 
         binding.btnQuickplay.setOnClickListener { view: View ->
             val list = getRandomKeywordList()
-            val bundle = bundleOf("selectedCategory" to list?.second, "categoryName" to list?.first)
+            var mistakes = 0
+            val bundle = bundleOf("selectedCategory" to list?.second, "categoryName" to list?.first, "Mistakes" to mistakes)
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
         return binding.root

@@ -24,7 +24,7 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class GameFragment : Fragment() {
-    private var points: Int = 0
+    private var mistakes = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,8 +34,7 @@ class GameFragment : Fragment() {
             context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
-
-        println(tempKeywordList)
+        mistakes = arguments?.getInt("Mistakes") as Int
         //region search
         if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
@@ -88,9 +87,6 @@ class GameFragment : Fragment() {
             JsonObjectRequest(Request.Method.GET, url, null, { response ->
                 try {
                     val jsonArray = response.getJSONArray("hits")
-
-                    println(jsonArray.length())
-
                     val randArray = mutableListOf<Int>()
                     var done = 0
                     while (true) {
@@ -130,8 +126,8 @@ class GameFragment : Fragment() {
         if (tempKeywordList.size != 0) {
             // Richtige Antwort
             if (userAnswer.trim().equals(tempKeywordList[0], true)) {
-                points++
-                val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to arguments?.getString("categoryName"),  "Points" to points)
+               
+                val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to arguments?.getString("categoryName"),  "Mistakes" to mistakes)
                 tempKeywordList.removeAt(0)
                 view?.findNavController()?.navigate(R.id.action_gameFragment_to_successFragment, bundle)
 
@@ -144,7 +140,7 @@ class GameFragment : Fragment() {
                 //endregion
 
             } else {
-                points = 0
+                mistakes++
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
             }
