@@ -24,6 +24,15 @@ class SuccessFragment : Fragment() {
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
         val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to categoryName,  "Mistakes" to mistakes)
 
+        if (tempKeywordList != null && tempKeywordList.isEmpty()) {
+            when (mistakes) {
+                1 -> binding.successTextView.text = "You guessed all words! \n With only " + mistakes.toString() + " mistake"
+                else -> {
+                    binding.successTextView.text = "You guessed all words! \n With only " + mistakes.toString() + " mistakes"
+                }
+            }
+        }
+
         if (tempKeywordList?.size != 0) {
             binding.btnNext.setOnClickListener { view: View ->
                 view.findNavController().navigate(R.id.action_successFragment_to_gameFragment, bundle)

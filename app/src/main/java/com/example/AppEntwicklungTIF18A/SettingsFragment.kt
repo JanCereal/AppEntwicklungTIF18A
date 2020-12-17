@@ -22,7 +22,6 @@ class SettingsFragment : Fragment() {
         switchCheck(binding.switchCountClue, R.string.wordHint)
         switchCheck(binding.switchSound, R.string.sounds)
         switchDarkCheck(binding.switchDarkmode, R.string.darkmode)
-        switchCheck(binding.switchLanguage, R.string.language)
         //endregion
 
         return binding.root

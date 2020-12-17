@@ -26,7 +26,7 @@ class StatsFragment : Fragment() {
          val mistakes = entry.second.trim().toFloat()
          val mistakePercentage = (mistakes / listSize) * 100
 
-         statEntries.add(entry.first + " with " + entry.second  + " Mistakes out of " + IO_updateClass.getCategoryLength(requireContext(), entry.first) + " items\n" +  mistakePercentage + "% mistake percentage" )
+         statEntries.add(entry.first + " with " + entry.second  + " Mistakes out of " + IO_updateClass.getCategoryLength(requireContext(), entry.first) + " Words \n" +  mistakePercentage + "% mistake percentage" )
       }
 
       val adapter = ArrayAdapter(requireContext(), R.layout.template_stat_entry, statEntries)
