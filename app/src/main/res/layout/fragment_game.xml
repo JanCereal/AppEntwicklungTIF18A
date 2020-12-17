@@ -15,7 +15,7 @@
         android:layout_marginTop="55dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel2"
@@ -26,7 +26,7 @@
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel3"
@@ -37,7 +37,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagePanel1"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel4"
@@ -48,7 +48,7 @@
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagePanel2"
-        app:srcCompat="@drawable/test2" />
+        app:srcCompat="@mipmap/loading" />
 
     <Button
         android:id="@+id/btnAnswer"
