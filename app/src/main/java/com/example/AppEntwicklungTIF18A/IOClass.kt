@@ -12,12 +12,18 @@ class IOClass {
         private var categoryCollection = ArrayList<Pair<String, MutableList<String>>>()
         private var statsCollection = ArrayList<Pair<String,String>>()
 
+        /**
+         * Speichert spielablauf in eine Datei
+         */
         fun writeHistory(context: Context?, categoryName: String?, mistakes:Int?){
             val data = readJson(context, STATS_CONST)
             data?.put(data.length().toString(),  Pair(categoryName, mistakes))
             writeJsonData(context, STATS_CONST, data)
         }
 
+        /**
+         * Lädt Statistiken und gibt diese in eine Liste aus
+         */
         fun getStats(context: Context?): ArrayList<Pair<String,String>>{
             val data = readJson(context, STATS_CONST)
             statsCollection.clear()
@@ -29,6 +35,9 @@ class IOClass {
             return statsCollection
         }
 
+        /**
+         * fügt ein einzelnes Wort einer Kategorie hinzu
+         */
         fun addSingleCategoryWord(context: Context?, categoryName: String, addedWord: String) {
             val data = readJson(context, FILE_CONST)
             val oldValues = data?.get(categoryName).toString()
@@ -37,6 +46,9 @@ class IOClass {
             writeJsonData(context,FILE_CONST, data)
         }
 
+        /**
+         * löscht ein einzelnes Wort aus einer Kategorie
+         */
         fun deleteSingleCategoryWord(context: Context?, categoryName: String, deletedWord: String) {
             val data = readJson(context, FILE_CONST)
             var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",", "")
@@ -47,18 +59,27 @@ class IOClass {
             writeJsonData(context,FILE_CONST, data)
         }
 
+        /**
+         * fügt eine Kategorie hinzu
+         */
         fun addCategory(context: Context?, categoryName: String) {
             val data = readJson(context, FILE_CONST)
             data?.put(categoryName, KEYWORD_CONST)
             writeJsonData(context, FILE_CONST, data)
         }
 
+        /**
+         * löscht eine Kategorie
+         */
         fun deleteCategory(context: Context?, categoryName: String) {
             val data = readJson(context, FILE_CONST)
             data?.remove(categoryName)
             writeJsonData(context,FILE_CONST, data)
         }
 
+        /**
+         * Gibt alle Kategorien in einer liste zurück
+         */
         fun getSavedFile(context: Context?): ArrayList<Pair<String, MutableList<String>>> {
             val data = readJson(context, FILE_CONST)
             categoryCollection.clear()
@@ -73,12 +94,18 @@ class IOClass {
             return categoryCollection
         }
 
+        /**
+         * Löscht die StatistikDatei
+         */
         fun deleteStatsFile(context: Context?){
             File(context?.filesDir?.absolutePath, STATS_CONST).delete()
         }
 
+        /**
+         *  Speichert die Dateien und gibt Standartwerte an.
+         *  Falls Dateien schon existieren passiert nix
+         */
         fun writeFiles(context: Context?) {
-            //TODO convert was auch immer wir für ne liste benutzen zu Map ??
             val file = File(context?.filesDir?.absolutePath, FILE_CONST)
             if (!file.exists()) {
                 val categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -107,7 +134,9 @@ class IOClass {
             }
         }
 
-        //region HelpMethods
+        /**
+         * Gibt länge einer Kategorie zurück
+         */
         fun getCategoryLength(context: Context?, categoryName: String?): Int? {
             getSavedFile(context)?.forEach {
                 if (it.first == categoryName)
@@ -116,7 +145,8 @@ class IOClass {
             return null
         }
 
-        private fun writeJsonData(context: Context?,file: String, data: JSONObject?) {
+        //region HelpMethods
+                private fun writeJsonData(context: Context?,file: String, data: JSONObject?) {
             try {
                 context?.openFileOutput(file, Context.MODE_PRIVATE).use { output ->
                     output?.write(data.toString().toByteArray())
