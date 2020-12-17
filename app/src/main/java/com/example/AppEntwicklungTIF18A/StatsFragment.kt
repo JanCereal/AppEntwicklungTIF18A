@@ -32,7 +32,11 @@ class StatsFragment : Fragment() {
       val adapter = ArrayAdapter(requireContext(), R.layout.template_stat_entry, statEntries)
       binding.listStats.adapter = adapter
 
-      binding.txtHighScore.text = "Highscore:\n" + statEntries[0]
+      if (statEntries.isEmpty()) {
+         binding.txtHighScore.text = "Highscore pending..."
+      } else {
+         binding.txtHighScore.text = "Highscore\n" + statEntries[0]
+      }  
 
       binding.txtDeleteData.setOnClickListener { v ->
          IO_updateClass.deleteStatsFile(requireContext())
