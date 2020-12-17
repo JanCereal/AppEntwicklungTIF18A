@@ -23,9 +23,6 @@
             android:id="@+id/action_homeFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_multiplayerFragment"
-            app:destination="@id/multiplayerFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
     </fragment>
@@ -85,11 +82,6 @@
            />
     </fragment>
 
-    <fragment
-        android:id="@+id/multiplayerFragment"
-        android:name="com.example.AppEntwicklungTIF18A.MultiplayerFragment"
-        android:label="Multiplayer"
-        tools:layout="@layout/fragment_multiplayer" />
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.example.AppEntwicklungTIF18A.StatsFragment"
