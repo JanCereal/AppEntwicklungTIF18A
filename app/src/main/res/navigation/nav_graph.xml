@@ -85,6 +85,6 @@
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.example.AppEntwicklungTIF18A.StatsFragment"
-        android:label="StatsFragment"
+        android:label="Statistics"
         tools:layout="@layout/fragment_stats" />
 </navigation>

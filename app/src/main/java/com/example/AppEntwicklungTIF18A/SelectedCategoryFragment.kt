@@ -32,16 +32,20 @@ class SelectedCategoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = MemberAdapter(categoryList, container, categoryName)
 
+        /**
+         * Methode zum Hinzufügen einer Kategorie
+         */
         fun localAddMethod(v: View){
             categoryList.add(txtAddMember.text.toString().trim())
             recyclerView.adapter = MemberAdapter(categoryList, container, categoryName)
 
-            IO_updateClass.addSingleCategoryWord(context, categoryName , txtAddMember.text.toString().trim())
+            IOClass.addSingleCategoryWord(context, categoryName , txtAddMember.text.toString().trim())
 
             inputManager.hideSoftInputFromWindow(v.windowToken, 0)
             txtAddMember.text.clear()
         }
 
+        //region Listener
         binding.btnAddMember.setOnClickListener { v: View ->
             localAddMethod(v)
         }
@@ -57,6 +61,8 @@ class SelectedCategoryFragment : Fragment() {
         binding.txtAddMember.doAfterTextChanged {
             binding.btnAddMember.isEnabled = binding.txtAddMember.text.trim().isNotEmpty()
         }
+        //endregion
+
         return binding.root
     }
 }

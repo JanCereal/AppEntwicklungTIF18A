@@ -1,13 +1,5 @@
 <resources>
-    <string name="app_name">Vorlesung</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="wordHint">1</string>
     <string name="sounds">1</string>
     <string name="darkmode">1</string>
-    <string name="language">1</string>
-
-    <string name="highScore">1</string>
-    <string name="currentScore">1</string>
-
 </resources>

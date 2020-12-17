@@ -24,7 +24,7 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>,
          deleteImage.setOnClickListener { v: View ->
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-               IO_updateClass.deleteCategory(context, categoryName.text.toString())
+               IOClass.deleteCategory(context, categoryName.text.toString())
                categories.removeAt(position)
                notifyItemRemoved(position)
             }

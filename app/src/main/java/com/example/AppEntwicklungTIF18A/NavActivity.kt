@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class NavActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nav)
+        setContentView(R.layout.fragment_host)
         val bottomNavigationBar = findViewById<BottomNavigationView>(R.id.navBarBottom)
         val navController = findNavController(R.id.nav_host_fragment)
 

@@ -35,6 +35,7 @@ class GameFragment : Fragment() {
         val binding = FragmentGameBinding.inflate(layoutInflater)
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
         mistakes = arguments?.getInt("Mistakes") as Int
+
         //region search
         if (tempKeywordList?.size != null) {
             tempKeywordList.shuffle()
@@ -43,10 +44,10 @@ class GameFragment : Fragment() {
             //region display Hint/Mistakes
             val sharedPrefHint = activity?.getSharedPreferences(getString(R.string.wordHint), Context.MODE_PRIVATE)
             if (sharedPrefHint != null && sharedPrefHint.getString(R.string.wordHint.toString(), "").equals("1")) {
-                binding.charCountTextView.text = "Tipp: " + tempKeywordList[0].toCharArray().size + " Buchstaben"
+                binding.charCountTextView.text = "Hint: " + tempKeywordList[0].toCharArray().size + " Letter"
             }
             //SetMistakes
-            binding.MistakeCountTextView.text = "Fehler: $mistakes"
+            binding.MistakeCountTextView.text = "Mistakes: $mistakes"
             //endregion
 
         } else {
@@ -79,6 +80,9 @@ class GameFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Sucht vier zufälliger Bilder zum Suchbegriff über die PixaBayAPI und stellt diese da
+     */
     private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
         val url =
             "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=$keyword&image_type=photo&pretty=true"
@@ -123,6 +127,9 @@ class GameFragment : Fragment() {
         requestQueue?.add(request)
     }
 
+    /**
+     * Überprüft die vom Nutzer gegebene Antwort
+     */
     private fun checkAnswer(tempKeywordList: ArrayList<String>, v: View, inputManager: InputMethodManager) {
         val userAnswer = answerTextView.text.toString()
         if (tempKeywordList.size != 0) {
@@ -155,6 +162,9 @@ class GameFragment : Fragment() {
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)
     }
 
+    /**
+     * Überprüft die einzigartigkeit eines Bilders in einer gegebenen Liste von Bildern
+     */
     private fun isUnique(list: MutableList<Int>, toBeChecked: Int): Boolean {
         for (i in 0 until list.size) {
             if (list[i] == toBeChecked) {

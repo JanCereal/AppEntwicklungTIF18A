@@ -20,7 +20,7 @@ class MemberAdapter(memberList: ArrayList<String>, parent: ViewGroup?, categoryN
             btnDelete.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    IO_updateClass.deleteSingleCategoryWord(context, categoryName, members[adapterPosition])
+                    IOClass.deleteSingleCategoryWord(context, categoryName, members[adapterPosition])
                     members.removeAt(position)
                     notifyItemRemoved(position)
                 }

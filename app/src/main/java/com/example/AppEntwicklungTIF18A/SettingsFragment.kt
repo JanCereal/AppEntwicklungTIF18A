@@ -18,15 +18,16 @@ class SettingsFragment : Fragment() {
     ): View {
         val binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        //region SwitchChecks
         switchCheck(binding.switchCountClue, R.string.wordHint)
         switchCheck(binding.switchSound, R.string.sounds)
         switchDarkCheck(binding.switchDarkmode, R.string.darkmode)
-        //endregion
 
         return binding.root
     }
 
+    /**
+     * Überprüft und setzt Switch Status
+     */
     private fun switchCheck(switch: Switch, key :Int){
         val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
         switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")
@@ -52,6 +53,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Überprüft und setzt Switch Status für den Darkmode
+     */
     private fun switchDarkCheck(switch: Switch, key :Int){
         val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
         switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")

@@ -4,7 +4,7 @@ import android.content.Context
 import org.json.JSONObject
 import java.io.File
 
-class IO_updateClass {
+class IOClass {
     companion object {
         private const val FILE_CONST = "categoryData.json"
         private const val STATS_CONST = "statsData.json"
@@ -71,10 +71,6 @@ class IO_updateClass {
                 categoryCollection.add(Pair(categoryName, listWords))
             }
             return categoryCollection
-        }
-
-        fun deleteCategoryFile(context: Context?){
-           File(context?.filesDir?.absolutePath, FILE_CONST).delete()
         }
 
         fun deleteStatsFile(context: Context?){

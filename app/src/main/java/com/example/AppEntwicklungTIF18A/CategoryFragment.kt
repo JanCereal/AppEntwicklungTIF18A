@@ -22,23 +22,27 @@ class CategoryFragment : Fragment() {
     ): View? {
         val binding = FragmentCategoryBinding.inflate(layoutInflater)
         val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val categories = IO_updateClass.getSavedFile(context)
+        val categories = IOClass.getSavedFile(context)
 
         val recyclerView = binding.recyclerViewCategory
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CategoryAdapter(categories, container)
 
-        fun localAddMethod(v : View) {
+        /**
+         * Methode zum Hinzufügen einer Kategorie
+         */
+        fun localAddMethod(v: View) {
             categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
             recyclerView.adapter = CategoryAdapter(categories, container)
-            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
+            IOClass.addCategory(context, txtAddCategory.text.toString().trim())
 
             inputManager.hideSoftInputFromWindow(v.windowToken, 0)
 
             txtAddCategory.text.clear()
         }
 
+        //region Listener und EnterCheck
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 categories.forEach {
@@ -63,6 +67,8 @@ class CategoryFragment : Fragment() {
         binding.txtAddCategory.doAfterTextChanged {
             binding.btnCreateCategory.isEnabled = binding.txtAddCategory.text.trim().isNotEmpty()
         }
+        //endregion
+
         return binding.root
     }
 }
