@@ -25,7 +25,7 @@ class SelectedCategoryFragment : Fragment() {
         val categoryName = arguments?.get("editCategoryName") as String
         val categoryList = arguments?.get("editCategoryList") as ArrayList<String>
 
-        (activity as AppCompatActivity).supportActionBar?.title = categoryName.toString()
+        (activity as AppCompatActivity).supportActionBar?.title = categoryName
 
         val recyclerView = binding.recyclerViewMember
         recyclerView.setHasFixedSize(true)

@@ -15,9 +15,9 @@ class StatsFragment : Fragment() {
       savedInstanceState: Bundle?
    ): View {
       val binding = FragmentStatsBinding.inflate(layoutInflater)
-      var statsArray = IO_updateClass.getStats(requireContext())
+      val statsArray = IO_updateClass.getStats(requireContext())
 
-      var statEntries = mutableListOf<String>()
+      val statEntries = mutableListOf<String>()
 
       statsArray.sortBy { it.second }
 

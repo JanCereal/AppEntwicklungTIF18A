@@ -16,9 +16,9 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>,
 
    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
       var categoryName = itemView.findViewById<TextView>(R.id.txtCategoryName)
-      var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
-      var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
-      var editImage = itemView.findViewById<ImageView>(R.id.imgEdit)
+      private var deleteImage = itemView.findViewById<ImageView>(R.id.imgDelete)
+      private var playImage = itemView.findViewById<ImageView>(R.id.imgPlay)
+      private var editImage = itemView.findViewById<ImageView>(R.id.imgEdit)
 
       init {
          deleteImage.setOnClickListener { v: View ->
@@ -31,7 +31,7 @@ class CategoryAdapter(exampleList: ArrayList<Pair<String, MutableList<String>>>,
          }
          playImage.setOnClickListener { v: View ->
             val position = adapterPosition
-            var mistakes = 0
+            val mistakes = 0
             if (position != RecyclerView.NO_POSITION) {
                if (categories[position].second.isEmpty()) {
                   Toast.makeText(context, "Selected Category is empty!", Toast.LENGTH_LONG).show()

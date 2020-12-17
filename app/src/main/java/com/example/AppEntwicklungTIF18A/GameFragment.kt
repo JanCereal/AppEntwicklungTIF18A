@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -47,7 +46,7 @@ class GameFragment : Fragment() {
                 binding.charCountTextView.text = "Tipp: " + tempKeywordList[0].toCharArray().size + " Buchstaben"
             }
             //SetMistakes
-            binding.MistakeCountTextView.text = "Fehler: " + mistakes
+            binding.MistakeCountTextView.text = "Fehler: $mistakes"
             //endregion
 
         } else {
@@ -82,7 +81,7 @@ class GameFragment : Fragment() {
 
     private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
         val url =
-            "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=" + keyword + "&image_type=photo&pretty=true"
+            "https://pixabay.com/api/?key=5303976-fd6581ad4ac165d1b75cc15b3&q=$keyword&image_type=photo&pretty=true"
         val imageUrls = mutableListOf("1", "2", "3", "4")
         val requestQueue: RequestQueue? = Volley.newRequestQueue(context)
 
@@ -143,14 +142,14 @@ class GameFragment : Fragment() {
                 //endregion
 
                 //SetMistakes
-                MistakeCountTextView.text = "Fehler: " + mistakes
+                MistakeCountTextView.text = "Fehler: $mistakes"
 
             } else {
                 mistakes++
                 answerTextView.hint = "Wrong!"
                 answerTextView.setText("")
                 //SetMistakes
-                MistakeCountTextView.text = "Fehler: " + mistakes
+                this.MistakeCountTextView.text = "Fehler: $mistakes"
             }
         }
         inputManager.hideSoftInputFromWindow(v.windowToken, 0)

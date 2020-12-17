@@ -13,7 +13,7 @@ class MemberAdapter(memberList: ArrayList<String>, parent: ViewGroup?, categoryN
     var categoryName = categoryName
 
     inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var btnDelete = itemView.findViewById<ImageView>(R.id.imgDeleteMember)
+        private var btnDelete = itemView.findViewById<ImageView>(R.id.imgDeleteMember)
         var categoryMember = itemView.findViewById<TextView>(R.id.txtMemberName)
 
         init {

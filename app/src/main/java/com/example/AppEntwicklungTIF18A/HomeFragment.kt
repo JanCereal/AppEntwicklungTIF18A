@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
         binding.btnQuickplay.setOnClickListener { view: View ->
             val list = getRandomKeywordList()
-            var mistakes = 0
+            val mistakes = 0
             val bundle = bundleOf("selectedCategory" to list?.second, "categoryName" to list?.first, "Mistakes" to mistakes)
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }

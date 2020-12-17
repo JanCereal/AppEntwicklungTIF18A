@@ -1,7 +1,6 @@
 package com.example.AppEntwicklungTIF18A
 
 import android.content.Context
-import android.provider.MediaStore
 import org.json.JSONObject
 import java.io.File
 
@@ -14,7 +13,7 @@ class IO_updateClass {
         private var statsCollection = ArrayList<Pair<String,String>>()
 
         fun writeHistory(context: Context?, categoryName: String?, mistakes:Int?){
-            var data = readJson(context, STATS_CONST)
+            val data = readJson(context, STATS_CONST)
             data?.put(data.length().toString(),  Pair(categoryName, mistakes))
             writeJsonData(context, STATS_CONST, data)
         }
@@ -24,14 +23,14 @@ class IO_updateClass {
             statsCollection.clear()
             data?.keys()?.forEach { it ->
                 println(data)
-                var value = data[it].toString().trim('(').trim(')').split(',')
+                val value = data[it].toString().trim('(').trim(')').split(',')
                 statsCollection.add(Pair(value[0], value[1]))
             }
             return statsCollection
         }
 
         fun addSingleCategoryWord(context: Context?, categoryName: String, addedWord: String) {
-            var data = readJson(context, FILE_CONST)
+            val data = readJson(context, FILE_CONST)
             val oldValues = data?.get(categoryName).toString()
                 .trimEnd(']') + "," + "\"" + addedWord + "\"" + "]"
             data?.put(categoryName, oldValues)
@@ -39,7 +38,7 @@ class IO_updateClass {
         }
 
         fun deleteSingleCategoryWord(context: Context?, categoryName: String, deletedWord: String) {
-            var data = readJson(context, FILE_CONST)
+            val data = readJson(context, FILE_CONST)
             var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",", "")
             oldValues = oldValues?.replace(",\"$deletedWord\"", "")
             oldValues = oldValues?.replace("\"$deletedWord\"", "")
@@ -49,13 +48,13 @@ class IO_updateClass {
         }
 
         fun addCategory(context: Context?, categoryName: String) {
-            var data = readJson(context, FILE_CONST)
+            val data = readJson(context, FILE_CONST)
             data?.put(categoryName, KEYWORD_CONST)
             writeJsonData(context, FILE_CONST, data)
         }
 
         fun deleteCategory(context: Context?, categoryName: String) {
-            var data = readJson(context, FILE_CONST)
+            val data = readJson(context, FILE_CONST)
             data?.remove(categoryName)
             writeJsonData(context,FILE_CONST, data)
         }
@@ -84,12 +83,12 @@ class IO_updateClass {
 
         fun writeFiles(context: Context?) {
             //TODO convert was auch immer wir für ne liste benutzen zu Map ??
-            var file = File(context?.filesDir?.absolutePath, FILE_CONST)
+            val file = File(context?.filesDir?.absolutePath, FILE_CONST)
             if (!file.exists()) {
-                var categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
+                val categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
                 categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
 
-                var jsonObject = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
+                val jsonObject = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
 
                 try {
                     context?.openFileOutput(FILE_CONST, Context.MODE_PRIVATE).use { output ->
@@ -99,10 +98,10 @@ class IO_updateClass {
                     e.printStackTrace()
                 }
             }
-            var statsFile = File(context?.filesDir?.absolutePath, STATS_CONST)
+            val statsFile = File(context?.filesDir?.absolutePath, STATS_CONST)
             if (!statsFile.exists()) {
                 try {
-                    var js = JSONObject().toString()
+                    val js = JSONObject().toString()
                     context?.openFileOutput(STATS_CONST, Context.MODE_PRIVATE).use { output ->
                         output?.write(js.toByteArray())
                     }
@@ -114,7 +113,7 @@ class IO_updateClass {
 
         //region HelpMethods
         fun getCategoryLength(context: Context?, categoryName: String?): Int? {
-            getSavedFile(context)?.forEach(){
+            getSavedFile(context)?.forEach {
                 if (it.first == categoryName)
                     return it.second.size
             }
