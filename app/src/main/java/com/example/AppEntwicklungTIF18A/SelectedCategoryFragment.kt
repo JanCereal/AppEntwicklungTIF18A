@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -33,35 +34,48 @@ class SelectedCategoryFragment : Fragment() {
         recyclerView.adapter = MemberAdapter(categoryList, container, categoryName)
 
         /**
-         * Methode zum Hinzufügen einer Kategorie
+         * Methode zum Hinzufügen eines Wortes zu einer Kategorie
          */
-        fun localAddMethod(v: View){
+        fun addWordToCategory(view: View) {
+            categoryList.forEach {
+                // Duplikatscheck
+                if (txtAddMember.text.toString().toLowerCase().trim() == it.toLowerCase()) {
+                    Toast.makeText(context, "Word already existing!", Toast.LENGTH_LONG).show()
+
+                    // Tastaur verstecken
+                    inputManager.hideSoftInputFromWindow(view.windowToken, 0)
+                    txtAddMember.text.clear()
+                    return
+                }
+            }
+            // Wort der Liste und der Savefile hinzufügen
             categoryList.add(txtAddMember.text.toString().trim())
+            IOClass.addWordToCategory(context, categoryName , txtAddMember.text.toString().trim())
+
             recyclerView.adapter = MemberAdapter(categoryList, container, categoryName)
 
-            IOClass.addSingleCategoryWord(context, categoryName , txtAddMember.text.toString().trim())
-
-            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+            inputManager.hideSoftInputFromWindow(view.windowToken, 0)
             txtAddMember.text.clear()
         }
 
-        //region Listener
-        binding.btnAddMember.setOnClickListener { v: View ->
-            localAddMethod(v)
+        // Hinzufügen bei Buttonclick
+        binding.btnAddMember.setOnClickListener { view: View ->
+            addWordToCategory(view)
         }
 
-        binding.txtAddMember.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        // Hinzufügen bei ENTER
+        binding.txtAddMember.setOnKeyListener(View.OnKeyListener { view, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                localAddMethod(v)
+                addWordToCategory(view)
                 return@OnKeyListener true
             }
             false
         })
 
+        // Button disabled, wenn Eingabefeld leer
         binding.txtAddMember.doAfterTextChanged {
             binding.btnAddMember.isEnabled = binding.txtAddMember.text.trim().isNotEmpty()
         }
-        //endregion
 
         return binding.root
     }

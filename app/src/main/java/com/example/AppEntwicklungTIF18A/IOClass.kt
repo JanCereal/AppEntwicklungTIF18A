@@ -38,7 +38,7 @@ class IOClass {
         /**
          * fügt ein einzelnes Wort einer Kategorie hinzu
          */
-        fun addSingleCategoryWord(context: Context?, categoryName: String, addedWord: String) {
+        fun addWordToCategory(context: Context?, categoryName: String, addedWord: String) {
             val data = readJson(context, FILE_CONST)
             val oldValues = data?.get(categoryName).toString()
                 .trimEnd(']') + "," + "\"" + addedWord + "\"" + "]"
@@ -49,7 +49,7 @@ class IOClass {
         /**
          * löscht ein einzelnes Wort aus einer Kategorie
          */
-        fun deleteSingleCategoryWord(context: Context?, categoryName: String, deletedWord: String) {
+        fun deleteWordFromCategory(context: Context?, categoryName: String, deletedWord: String) {
             val data = readJson(context, FILE_CONST)
             var oldValues = data?.get(categoryName)?.toString()?.replace("\"$deletedWord\",", "")
             oldValues = oldValues?.replace(",\"$deletedWord\"", "")
@@ -146,7 +146,7 @@ class IOClass {
         }
 
         //region HelpMethods
-                private fun writeJsonData(context: Context?,file: String, data: JSONObject?) {
+        private fun writeJsonData(context: Context?,file: String, data: JSONObject?) {
             try {
                 context?.openFileOutput(file, Context.MODE_PRIVATE).use { output ->
                     output?.write(data.toString().toByteArray())
@@ -166,7 +166,6 @@ class IOClass {
             }
             return jsonObject
         }
-
         //endregion
     }
 }

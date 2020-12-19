@@ -34,6 +34,7 @@ class CategoryFragment : Fragment() {
          */
         fun addCategory(v: View) {
             categories.forEach {
+                // Duplikatscheck
                 if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
                     Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
 
@@ -51,7 +52,7 @@ class CategoryFragment : Fragment() {
             txtAddCategory.text.clear()
         }
 
-        //region Listener und EnterCheck
+        // Hinzufügen bei ENTER
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 addCategory(v)
@@ -60,14 +61,15 @@ class CategoryFragment : Fragment() {
             false
         })
 
+        // Hinzufügen bei Buttonclick
         binding.btnCreateCategory.setOnClickListener{ v : View ->
             addCategory(v)
         }
 
+        // Button disabled, wenn Eingabefeld leer
         binding.txtAddCategory.doAfterTextChanged {
             binding.btnCreateCategory.isEnabled = binding.txtAddCategory.text.trim().isNotEmpty()
         }
-        //endregion
 
         return binding.root
     }

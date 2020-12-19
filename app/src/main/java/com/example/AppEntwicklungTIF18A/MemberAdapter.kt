@@ -8,19 +8,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class MemberAdapter(memberList: ArrayList<String>, parent: ViewGroup?, categoryName : String) : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
-    var members = memberList
-    var context = parent?.context
-    var categoryName = categoryName
+    private var members = memberList
+    private var context = parent?.context
+    private var categoryName = categoryName
 
     inner class MemberViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var btnDelete = itemView.findViewById<ImageView>(R.id.imgDeleteMember)
         var categoryMember = itemView.findViewById<TextView>(R.id.txtMemberName)
 
         init {
-            btnDelete.setOnClickListener { v: View ->
+            // Löschen eines Wortes
+            btnDelete.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    IOClass.deleteSingleCategoryWord(context, categoryName, members[adapterPosition])
+                    IOClass.deleteWordFromCategory(context, categoryName, members[adapterPosition])
                     members.removeAt(position)
                     notifyItemRemoved(position)
                 }

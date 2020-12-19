@@ -86,7 +86,7 @@ class GameFragment : Fragment() {
    }
 
    /**
-    * Sucht vier zufälliger Bilder zum Suchbegriff über die PixaBayAPI und stellt diese da
+    * Sucht vier zufällige Bilder zum Suchbegriff über die PixaBayAPI und stellt diese dar
     */
    private fun parseSearchJSON(binding: FragmentGameBinding, keyword: String) {
       val url =
@@ -192,7 +192,7 @@ class GameFragment : Fragment() {
    }
 
    /**
-    * Überprüft die einzigartigkeit eines Bilders in einer gegebenen Liste von Bildern
+    * Überprüft die Einzigartigkeit eines Bildes in einer gegebenen Liste von Bildern
     */
    private fun isUnique(list: MutableList<Int>, toBeChecked: Int): Boolean {
       for (i in 0 until list.size) {
