@@ -32,36 +32,36 @@ class CategoryFragment : Fragment() {
         /**
          * Methode zum Hinzufügen einer Kategorie
          */
-        fun localAddMethod(v: View) {
+        fun addCategory(v: View) {
+            categories.forEach {
+                if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
+                    Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
+
+                    inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+                    txtAddCategory.text.clear()
+                    return
+                }
+            }
             categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
-            recyclerView.adapter = CategoryAdapter(categories, container)
             IOClass.addCategory(context, txtAddCategory.text.toString().trim())
 
-            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+            recyclerView.adapter = CategoryAdapter(categories, container)
 
+            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
             txtAddCategory.text.clear()
         }
 
         //region Listener und EnterCheck
         binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                categories.forEach {
-                    if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
-                        Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
-
-                        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-                        txtAddCategory.text.clear()
-                        return@OnKeyListener true
-                    }
-                }
-                localAddMethod(v)
+                addCategory(v)
                 return@OnKeyListener true
             }
             false
         })
 
         binding.btnCreateCategory.setOnClickListener{ v : View ->
-            localAddMethod(v)
+            addCategory(v)
         }
 
         binding.txtAddCategory.doAfterTextChanged {
