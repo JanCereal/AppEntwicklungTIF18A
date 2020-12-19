@@ -43,7 +43,7 @@ class StatsFragment : Fragment() {
       binding.txtDeleteData.setOnClickListener { v ->
          IOClass.deleteStatsFile(requireContext())
          adapter.clear()
-
+         IOClass.deleteCategoryFile(context)
          IOClass.writeFiles(requireContext())
          binding.txtHighScore.text = "Highscore pending..."
       }
