@@ -21,7 +21,7 @@ class StatsFragment : Fragment() {
       // Sortieren nach Fehleranzahl
       statsArray.sortBy { it.second }
 
-      //region Anzeigen von variablem Text im StatFragment
+      //region Anzeigen von variablem Text (Fehler, etc.) im StatFragment
       statsArray.forEach { entry ->
          val listSize = (IOClass.getCategoryLength(requireContext(), entry.first)) as Int
          val mistakes = entry.second.trim().toFloat()
