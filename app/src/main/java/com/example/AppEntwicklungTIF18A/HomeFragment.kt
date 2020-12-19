@@ -20,12 +20,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        IO_updateClass.writeFiles(context)
+        IOClass.writeFiles(context)
         val binding = FragmentHomeBinding.inflate(layoutInflater)
 
         binding.btnQuickplay.setOnClickListener { view: View ->
             val list = getRandomKeywordList()
-            var mistakes = 0
+            val mistakes = 0
             val bundle = bundleOf("selectedCategory" to list?.second, "categoryName" to list?.first, "Mistakes" to mistakes)
             view.findNavController().navigate(R.id.action_homeFragment_to_gameFragment, bundle)
         }
@@ -42,8 +42,11 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Auswählen einer zufälligen Liste in der Collection
+     */
     private fun getRandomKeywordList(): Pair<String, MutableList<String>>? {
-        val list: ArrayList<Pair<String, MutableList<String>>> = IO_updateClass.getSavedFile(context)
+        val list: ArrayList<Pair<String, MutableList<String>>> = IOClass.getSavedFile(context)
 
         list.forEach { _ ->
             val random = Random.nextInt(0, list.size)

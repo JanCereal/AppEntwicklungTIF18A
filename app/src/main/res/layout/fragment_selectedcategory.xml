@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:hint="New Word"
         android:id="@+id/txtAddMember"
         android:layout_width="283dp"
         android:layout_height="48dp"

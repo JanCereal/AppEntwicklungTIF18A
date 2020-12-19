@@ -22,47 +22,55 @@ class CategoryFragment : Fragment() {
     ): View? {
         val binding = FragmentCategoryBinding.inflate(layoutInflater)
         val inputManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val categories = IO_updateClass.getSavedFile(context)
+        val categories = IOClass.getSavedFile(context)
 
         val recyclerView = binding.recyclerViewCategory
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CategoryAdapter(categories, container)
 
-        fun localAddMethod(v : View) {
+        /**
+         * Methode zum Hinzufügen einer Kategorie
+         */
+        fun addCategory(view: View) {
+            categories.forEach {
+                // Duplikatscheck
+                if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
+                    Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
+
+                    inputManager.hideSoftInputFromWindow(view.windowToken, 0)
+                    txtAddCategory.text.clear()
+                    return
+                }
+            }
             categories.add(Pair(txtAddCategory.text.toString().trim(), mutableListOf<String>()))
+            IOClass.addCategory(context, txtAddCategory.text.toString().trim())
+
             recyclerView.adapter = CategoryAdapter(categories, container)
-            IO_updateClass.addCategory(context, txtAddCategory.text.toString().trim())
 
-            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-
+            inputManager.hideSoftInputFromWindow(view.windowToken, 0)
             txtAddCategory.text.clear()
         }
 
-        binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        // Hinzufügen bei ENTER
+        binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { view, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                categories.forEach {
-                    if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
-                        Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
-
-                        inputManager.hideSoftInputFromWindow(v.windowToken, 0)
-                        txtAddCategory.text.clear()
-                        return@OnKeyListener true
-                    }
-                }
-                localAddMethod(v)
+                addCategory(view)
                 return@OnKeyListener true
             }
             false
         })
 
-        binding.btnCreateCategory.setOnClickListener{ v : View ->
-            localAddMethod(v)
+        // Hinzufügen bei Buttonclick
+        binding.btnCreateCategory.setOnClickListener{ view : View ->
+            addCategory(view)
         }
 
+        // Button disabled, wenn Eingabefeld leer
         binding.txtAddCategory.doAfterTextChanged {
             binding.btnCreateCategory.isEnabled = binding.txtAddCategory.text.trim().isNotEmpty()
         }
+
         return binding.root
     }
 }

@@ -24,6 +24,17 @@ class SuccessFragment : Fragment() {
         val tempKeywordList = arguments?.getStringArrayList("selectedCategory")
         val bundle = bundleOf("selectedCategory" to tempKeywordList,"categoryName" to categoryName,  "Mistakes" to mistakes)
 
+        //Anzeigen von variablem Text im SuccessFragment
+        if (tempKeywordList != null && tempKeywordList.isEmpty()) {
+            when (mistakes) {
+                1 -> binding.successTextView.text = "You guessed all words! \n With only " + mistakes.toString() + " mistake"
+                else -> {
+                    binding.successTextView.text = "You guessed all words! \n With only " + mistakes.toString() + " mistakes"
+                }
+            }
+        }
+
+        //region Navigation
         if (tempKeywordList?.size != 0) {
             binding.btnNext.setOnClickListener { view: View ->
                 view.findNavController().navigate(R.id.action_successFragment_to_gameFragment, bundle)
@@ -31,11 +42,13 @@ class SuccessFragment : Fragment() {
             }
         } else {
             binding.btnNext.setOnClickListener { view: View ->
-                IO_updateClass.writeHistory(context, categoryName, mistakes)
+                IOClass.writeHistory(context, categoryName, mistakes)
                 view.findNavController().navigate(R.id.action_successFragment_to_homeFragment)
                 (activity as AppCompatActivity?)!!.supportActionBar!!.show()
             }
         }
+        //endregion
+
         return binding.root
     }
 }

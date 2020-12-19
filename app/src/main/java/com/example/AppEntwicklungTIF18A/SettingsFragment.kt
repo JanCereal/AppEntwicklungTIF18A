@@ -5,15 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.ImageSwitcher
 import android.widget.Switch
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.AppEntwicklungTIF18A.databinding.FragmentSettingsBinding
-import kotlinx.android.synthetic.main.fragment_game.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : Fragment() {
     override fun onCreateView(
@@ -23,16 +18,16 @@ class SettingsFragment : Fragment() {
     ): View {
         val binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        //region SwitchChecks
         switchCheck(binding.switchCountClue, R.string.wordHint)
         switchCheck(binding.switchSound, R.string.sounds)
         switchDarkCheck(binding.switchDarkmode, R.string.darkmode)
-        switchCheck(binding.switchLanguage, R.string.language)
-        //endregion
 
         return binding.root
     }
 
+    /**
+     * Überprüft und setzt Switch Status
+     */
     private fun switchCheck(switch: Switch, key :Int){
         val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
         switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")
@@ -58,6 +53,9 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    /**
+     * Überprüft und setzt Switch Status für den Darkmode
+     */
     private fun switchDarkCheck(switch: Switch, key :Int){
         val sharedPref = activity?.getSharedPreferences(getString(key), Context.MODE_PRIVATE)
         switch.isChecked = sharedPref != null && sharedPref.getString(key.toString(), "").equals("1")

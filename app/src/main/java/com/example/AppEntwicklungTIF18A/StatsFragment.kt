@@ -15,30 +15,37 @@ class StatsFragment : Fragment() {
       savedInstanceState: Bundle?
    ): View {
       val binding = FragmentStatsBinding.inflate(layoutInflater)
-      var statsArray = IO_updateClass.getStats(requireContext())
+      val statsArray = IOClass.getStats(requireContext())
+      val statEntries = mutableListOf<String>()
 
-      var statEntries = mutableListOf<String>()
-
+      // Sortieren nach Fehleranzahl
       statsArray.sortBy { it.second }
 
+      //region Anzeigen von variablem Text (Fehler, etc.) im StatFragment
       statsArray.forEach { entry ->
-         val listSize = (IO_updateClass.getCategoryLength(requireContext(), entry.first)) as Int
+         val listSize = (IOClass.getCategoryLength(requireContext(), entry.first)) as Int
          val mistakes = entry.second.trim().toFloat()
          val mistakePercentage = (mistakes / listSize) * 100
 
-         statEntries.add(entry.first + " with " + entry.second  + " Mistakes out of " + IO_updateClass.getCategoryLength(requireContext(), entry.first) + " items\n" +  mistakePercentage + "% mistake percentage" )
+         statEntries.add(entry.first + " with " + entry.second  + " Mistakes out of " + IOClass.getCategoryLength(requireContext(), entry.first) + " Words \n" +  mistakePercentage + "% mistake percentage" )
       }
 
       val adapter = ArrayAdapter(requireContext(), R.layout.template_stat_entry, statEntries)
       binding.listStats.adapter = adapter
 
-      binding.txtHighScore.text = "Highscore:\n" + statEntries[0]
+      if (statEntries.isEmpty()) {
+         binding.txtHighScore.text = "Highscore pending..."
+      } else {
+         binding.txtHighScore.text = "Highscore\n" + statEntries[0]
+      }
+      //endregion
 
+      //Listener
       binding.txtDeleteData.setOnClickListener { v ->
-         IO_updateClass.deleteStatsFile(requireContext())
+         IOClass.deleteStatsFile(requireContext())
          adapter.clear()
-
-         IO_updateClass.writeFiles(requireContext())
+         IOClass.deleteCategoryFile(context)
+         IOClass.writeFiles(requireContext())
          binding.txtHighScore.text = "Highscore pending..."
       }
 

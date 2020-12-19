@@ -13,7 +13,7 @@
         android:layout_width="156dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Schnelles Spiel"
+        android:text="Quickplay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />

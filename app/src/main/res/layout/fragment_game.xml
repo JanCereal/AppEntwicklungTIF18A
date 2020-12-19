@@ -12,21 +12,21 @@
         android:layout_height="135dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2"
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel2"
         android:layout_width="135dp"
         android:layout_height="135dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2"
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel3"
@@ -37,7 +37,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagePanel1"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@mipmap/loading" />
 
     <ImageView
         android:id="@+id/imagePanel4"
@@ -48,11 +48,11 @@
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imagePanel2"
-        app:srcCompat="@drawable/test2" />
+        app:srcCompat="@mipmap/loading" />
 
     <Button
         android:id="@+id/btnAnswer"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
@@ -63,18 +63,18 @@
 
     <EditText
         android:id="@+id/answerTextView"
-        android:layout_width="337dp"
-        android:layout_height="53dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/textview_border"
-        android:hint="Answer"
         android:gravity="center"
-        android:textColor="#000000"
+        android:hint="Answer"
         android:textSize="36sp"
+        android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/btnAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -82,46 +82,39 @@
 
     <TextView
         android:id="@+id/charCountTextView"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:gravity="left"
-        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/answerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/MistakeCountTextView"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginBottom="5dp"
         android:gravity="right"
-        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/answerTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <FrameLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="376dp"
-        android:layout_height="329dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/textview_border"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -129,7 +122,7 @@
 
     <Button
         android:id="@+id/btnReroll"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
