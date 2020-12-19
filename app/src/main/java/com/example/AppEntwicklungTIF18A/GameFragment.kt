@@ -51,12 +51,9 @@ class GameFragment : Fragment() {
             binding.charCountTextView.text =
                "Hint: " + tempKeywordList[0].toCharArray().size + " Letter"
          }
-         //SetMistakes
+         //DisplayMistakes
          binding.MistakeCountTextView.text = "Mistakes: $mistakes"
          //endregion
-
-      } else {
-         println("rKeywordList empty")
       }
       //endregion
 
