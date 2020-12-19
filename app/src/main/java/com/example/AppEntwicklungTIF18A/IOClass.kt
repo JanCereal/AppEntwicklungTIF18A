@@ -95,6 +95,13 @@ class IOClass {
         }
 
         /**
+         * Löscht die vom Nutzer erstellten Kategorien
+         */
+        fun deleteCategoryFile(context: Context?){
+            File(context?.filesDir?.absolutePath, FILE_CONST).delete()
+        }
+
+        /**
          * Löscht die StatistikDatei
          */
         fun deleteStatsFile(context: Context?){
@@ -109,7 +116,12 @@ class IOClass {
             val file = File(context?.filesDir?.absolutePath, FILE_CONST)
             if (!file.exists()) {
                 val categoryMap: MutableMap<String, MutableList<String>> = mutableMapOf()
-                categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "bird")
+                categoryMap["Nature"] = mutableListOf("water", "tree", "dirt", "flower", "fire")
+                categoryMap["Shapes"] = mutableListOf("circle", "triangle", "rectangle", "square", "heart")
+                categoryMap["Animals"] = mutableListOf("ape", "elephant", "tiger", "cat", "dog", "bird")
+                categoryMap["Cars"] = mutableListOf("bmw", "vw", "mercedes", "audi", "ford")
+                categoryMap["Citys"] = mutableListOf("berlin", "paris", "london", "sydney", "tokyo")
+
 
                 val jsonObject = JSONObject(categoryMap as Map<String, MutableList<String>>).toString()
 
