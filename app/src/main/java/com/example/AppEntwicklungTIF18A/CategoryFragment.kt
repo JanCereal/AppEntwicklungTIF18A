@@ -32,13 +32,13 @@ class CategoryFragment : Fragment() {
         /**
          * Methode zum Hinzufügen einer Kategorie
          */
-        fun addCategory(v: View) {
+        fun addCategory(view: View) {
             categories.forEach {
                 // Duplikatscheck
                 if (txtAddCategory.text.toString().toLowerCase().trim() == it.first.toLowerCase()) {
                     Toast.makeText(context, "Category already existing!", Toast.LENGTH_LONG).show()
 
-                    inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+                    inputManager.hideSoftInputFromWindow(view.windowToken, 0)
                     txtAddCategory.text.clear()
                     return
                 }
@@ -48,22 +48,22 @@ class CategoryFragment : Fragment() {
 
             recyclerView.adapter = CategoryAdapter(categories, container)
 
-            inputManager.hideSoftInputFromWindow(v.windowToken, 0)
+            inputManager.hideSoftInputFromWindow(view.windowToken, 0)
             txtAddCategory.text.clear()
         }
 
         // Hinzufügen bei ENTER
-        binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        binding.txtAddCategory.setOnKeyListener(View.OnKeyListener { view, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                addCategory(v)
+                addCategory(view)
                 return@OnKeyListener true
             }
             false
         })
 
         // Hinzufügen bei Buttonclick
-        binding.btnCreateCategory.setOnClickListener{ v : View ->
-            addCategory(v)
+        binding.btnCreateCategory.setOnClickListener{ view : View ->
+            addCategory(view)
         }
 
         // Button disabled, wenn Eingabefeld leer
