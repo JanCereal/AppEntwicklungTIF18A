@@ -74,6 +74,7 @@
         android:gravity="center"
         android:hint="Answer"
         android:textSize="36sp"
+        android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@+id/btnAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
