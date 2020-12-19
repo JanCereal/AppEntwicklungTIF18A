@@ -18,6 +18,7 @@ class StatsFragment : Fragment() {
       val statsArray = IOClass.getStats(requireContext())
       val statEntries = mutableListOf<String>()
 
+      // Sortieren nach Fehleranzahl
       statsArray.sortBy { it.second }
 
       //region Anzeigen von variablem Text im StatFragment
